@@ -4,9 +4,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href="css.css">
+    <title>Document</title>
 </head>
 <body>
-    <div></div>
+    <div class = "container">
+        <a class = "home">Home</a>
+        <a class = "random">Random</a>
+        <div class = "browsewords"><a>Browse words</a></div>
+        <div class = "practice"><a>Practice</a></div>
+        <div class = "myprofile"><a>Profile</a></div>
+
+        <div class="lefcolumn">
+            <div class="wordoftheday">
+                <h2>Word of the day</h2>
+                <a><h3>Word</h3></a>
+            </div>
+            <div class="allwords">
+                <div class="box">
+                    <a><h3 class="word">Word</h3></a>
+                    <p class="partofspeech">noun</p>
+                    <p class="definition">Definition</p>
+                    <p class="language">English</p>
+                </div>
+                <div class="box">
+                    <a><h3 class="word">Word</h3></a>
+                    <p class="partofspeech">noun</p>
+                    <p class="definition">Definition</p>
+                    <p class="language">English</p>
+                </div>
+            </div>
+        </div>
+        <div class="rightcolumn">
+            <h2>Filters</h2>
+            <form>
+                <div class="include">
+                    <h3>Include</h3>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                </div>
+                <div class="exclude">
+                    <h3>Exclude</h3>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                </div>
+                <div class="sort">
+                    <h3>Filter</h3>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                    <div class="row"><input type="checkbox"/><label>Something</label></div>
+                </div>
+                <input type="submit"/>
+            </form>
+            
+            
+        </div>
+        <div class="pagenav"><a><<</a><a><</a><a>1</a>...<a>3</a>4<a>5</a>...<a>7</a><a>></a><a>>></a></div>
+        <form class="search"><label grid-area="slabel">Search:</label><input grid-area="sinput" type="text"/><input grid-area="ssubmit" type="submit"/></form>
+    </div>
 </body>
 </html>
