@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LanguageLearningSite</title>
+    <link rel="stylesheet" href="~/css/css.css" />
+</head>
+<body>
+    <div class="container">
+        <a class="home" asp-page="Index">Home</a>
+        <a class="random" asp-page="Word" asp-route-random="@true">Random</a>
+        <div class="browsewords"><a asp-page="AllWords">Browse words</a></div>
+        <div class="practice"><a asp-page="Practice">Practice</a></div>
+        <div class="myprofile"><a asp-page="Profile">Profile</a></div>
+        @RenderBody()
+        <form class="search"><label grid-area="slabel">Search:</label><input grid-area="sinput" type="text" /><input grid-area="ssubmit" type="submit" /></form>
+    </div>
+</body>
+</html>
+

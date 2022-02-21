@@ -1,0 +1,103 @@
+.container{
+    display: grid;
+
+    grid-template-areas: 
+    "home browsewords practice random myprofile"
+    "leftcolumn leftcolumn empty rightcolumn rightcolumn"
+    "pagenav pagenav search search search";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+.home{
+    grid-area:home;
+    border-bottom: 2pt black solid;
+}
+
+.browsewords{
+    grid-area:browsewords;
+    border-bottom: 2pt black solid;
+}
+.practice{
+    grid-area:practice;
+    border-bottom: 2pt black solid;
+}
+.random{
+    grid-area:random;
+    border-bottom: 2pt black solid;
+}
+.myprofile{
+    grid-area:myprofile;
+    border-bottom: 2pt black solid;
+}
+
+.leftcolumn{
+    grid-area: leftcolumn;
+    display: grid;
+    border:gray solid 1pt;
+}
+
+.rightcolumn{
+    grid-area: rightcolumn;
+    display: grid;
+    border:gray solid 1pt;
+}
+.pagenav{
+    grid-area: pagenav;
+    display: grid;
+    grid-template-areas: 
+    "prev numbers next";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+.numbers{
+    grid-area: numbers;
+}
+.prev{
+    grid-area:prev;
+}
+.next{
+    grid-area:next;
+}
+.box{
+    border:gray double 1pt;
+    display: grid;
+    grid-template-areas: 
+    "word wordpart"
+    "definition definition"
+    "language language";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+}
+.wordofthedaybox{
+    border:gray double 3pt;
+    display: grid;
+    grid-template-areas: 
+    "word language";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+}
+.partofspeech{
+    grid-area: wordpart;
+}
+.word{
+    grid-area: word;
+}
+.definition{
+    grid-area:definition;
+}
+.language{
+    grid-area:language;
+}
+.search{
+    grid-area: search;
+    display: grid;
+    grid-template-areas: 
+    "slabel sinput ssubmit";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto;
+}
+.allwords{
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(autofit, );
+}
