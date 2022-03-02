@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LanguageLearning
 {
-    public class Definition
+    public class Definition : IComparable
     {
         private int id;
         private string definition;
@@ -31,8 +32,36 @@ namespace LanguageLearning
         }
 
         public int Id { get => id; set => id = value; }
-        public string Defenition { get => definition; set => definition = value; }
+        [Required, RegularExpression(@"^(\w+\s?)+$")]
+        public string Def { get => definition; set => definition = value; }
         public int Votes { get => votes; set => votes = value; }
         internal PartOfSpeach PartOfSpeach { get => partOfSpeach; set => partOfSpeach = value; }
+
+        public int CompareTo(Definition definition)
+        {
+            if(this.partOfSpeach < definition.partOfSpeach)
+            {
+                return -1;
+            }
+            else if(this.partOfSpeach > definition.partOfSpeach)
+            {
+                return 1;
+            }
+            if(this.votes > definition.votes)
+            {
+                return -1;
+            }
+            return 0;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return CompareTo((Definition)obj);
+        }
+
+        public override string ToString()
+        {
+            return $"{id}-{definition}";
+        }
     }
 }

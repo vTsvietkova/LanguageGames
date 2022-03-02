@@ -8,6 +8,22 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto 1fr auto;
 }
+@media(max-width: 800px)
+{
+    .container {
+        display: grid;
+        grid-template-areas:
+            "home home"
+            "browsewords practice"
+            "random myprofile"
+            "search search"
+            "rightcolumn rightcolumn"
+            "leftcolumn leftcolumn"
+            "pagenav pagenav";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto auto 1fr 1fr auto;
+    }
+}
 
 .home{
     grid-area:home;
@@ -99,5 +115,5 @@
 }
 .allwords{
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(autofit, );
+    /*grid-template-rows: repeat(autofit, );*/
 }

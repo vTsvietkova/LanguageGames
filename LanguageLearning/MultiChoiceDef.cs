@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLearning
 {
-    public enum PartOfSpeach
+    class MultiChoiceDef : ShuffledDefinitionsGame
     {
-        noun, 
-        verb,
-        adjective
     }
 }

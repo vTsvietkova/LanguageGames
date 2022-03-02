@@ -16,22 +16,22 @@
         <div class = "myprofile"><a>Profile</a></div>
 
         <div class="lefcolumn">
-            <div class="wordoftheday">
-                <h2>Word of the day</h2>
-                <a><h3>Word</h3></a>
+            <div class="wordofthedaybox">
+                <div class="word">Word of the day</div>
+                <a class="language">Word</a>
             </div>
             <div class="allwords">
                 <div class="box">
-                    <a><h3 class="word">Word</h3></a>
-                    <p class="partofspeech">noun</p>
-                    <p class="definition">Definition</p>
-                    <p class="language">English</p>
+                    <div><a class="word">Word</a></div>
+                    <div class="partofspeech">noun</div>
+                    <div class="definition">Definition</div>
+                    <div class="language">English</div>
                 </div>
                 <div class="box">
-                    <a><h3 class="word">Word</h3></a>
-                    <p class="partofspeech">noun</p>
-                    <p class="definition">Definition</p>
-                    <p class="language">English</p>
+                    <a><div class="word">Word</div></a>
+                    <div class="partofspeech">noun</div>
+                    <div class="definition">Definition</div>
+                    <div class="language">English</div>
                 </div>
             </div>
         </div>
@@ -58,7 +58,15 @@
             
             
         </div>
-        <div class="pagenav"><a><<</a><a><</a><a>1</a>...<a>3</a>4<a>5</a>...<a>7</a><a>></a><a>>></a></div>
+        <div class="pagenav">
+            <div class="prev">
+                <a><<</a><a><</a>
+            </div>
+            <div class="numbers">
+                <a>1</a>...<a>3</a>4<a>5</a>...<a>7</a>
+            </div>
+            <div clas="next""><a>></a><a>>></a></div>
+        </div>
         <form class="search"><label grid-area="slabel">Search:</label><input grid-area="sinput" type="text"/><input grid-area="ssubmit" type="submit"/></form>
     </div>
 </body>

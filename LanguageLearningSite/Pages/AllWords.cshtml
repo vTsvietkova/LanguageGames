@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{skip:int=0}/{show:int=4}"
 @model LanguageLearningSite.Pages.AllWordsModel
 @{
     ViewData["Title"] = "All words";
@@ -10,18 +10,16 @@
         <a class="language">Word</a>
     </div>
     <div class="allwords">
-        <div class="box">
-            <div><a class="word">Word</a></div>
-            <div class="partofspeech">noun</div>
-            <div class="definition">Definition</div>
-            <div class="language">English</div>
-        </div>
-        <div class="box">
-            <a><div class="word">Word</div></a>
-            <div class="partofspeech">noun</div>
-            <div class="definition">Definition</div>
-            <div class="language">English</div>
-        </div>
+        @for (int i = Model.Skip; i < Model.WordsOnPage; i++)
+        {
+            LanguageLearning.Word word = Model.words[i];
+            <div class="box">
+                <div><a asp-page="Word" asp-route-random="@false" class="word">@word.WordString</a></div>
+                <div class="partofspeech">@word.PartsOfSpeach</div>
+                <div class="definition">@word.MostPopularDefinition.Def</div>
+                <div class="language">@word.Definitions.Count definitions in total</div>
+            </div>
+        }
     </div>
 </div>
 <div class="rightcolumn">
@@ -55,5 +53,5 @@
     <div class="numbers">
         <a>1</a>...<a>3</a>4<a>5</a>...<a>7</a>
     </div>
-    <div clas="next" "><a>></a><a>>></a></div>
+    <div class="next"><a>></a><a>>></a></div>
 </div>
