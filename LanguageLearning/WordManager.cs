@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +24,22 @@ namespace LanguageLearning
 
         public void Create(Word word)
         {
-            DAL.Create(word);
+            ValidationContext context = new(word);
+            List<ValidationResult> errors = new();
+
+            if (!Validator.TryValidateObject(word, context, errors))
+            {
+                throw new Exception(errors.ToString());
+            }
+            else
+            {
+                DAL.CreateWord(word);
+            }
         }
 
         public void Delete(int id)
         {
-            DAL.Delete(id);
+            DAL.DeleteWord(id);
         }
 
         public Word Get(int id)
@@ -45,7 +56,17 @@ namespace LanguageLearning
 
         public void Update(Word word)
         {
-            DAL.Update(word);
+            ValidationContext context = new(word);
+            List<ValidationResult> errors = new();
+
+            if (!Validator.TryValidateObject(word, context, errors))
+            {
+                throw new Exception(errors.ToString());
+            }
+            else
+            {
+                DAL.UpdateWord(word);
+            }
         }
 
         public Word GetRandom()

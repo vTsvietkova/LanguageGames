@@ -9,6 +9,7 @@ namespace LanguageLearning.MockDB
 {
     public class MockUserDAL : IUserDAL
     {
+        
         public void Create(User user)
         {
             ValidationContext context = new(user);

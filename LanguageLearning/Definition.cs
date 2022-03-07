@@ -35,7 +35,7 @@ namespace LanguageLearning
         [Required, RegularExpression(@"^(\w+\s?)+$")]
         public string Def { get => definition; set => definition = value; }
         public int Votes { get => votes; set => votes = value; }
-        internal PartOfSpeach PartOfSpeach { get => partOfSpeach; set => partOfSpeach = value; }
+        public PartOfSpeach PartOfSpeach { get => partOfSpeach; set => partOfSpeach = value; }
 
         public int CompareTo(Definition definition)
         {

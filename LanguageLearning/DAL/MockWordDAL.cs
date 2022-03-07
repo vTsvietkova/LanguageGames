@@ -9,21 +9,12 @@ namespace LanguageLearning.MockDB
 {
     public class MockWordDAL : IWordDAL
     {
-        void IWordDAL.Create(Word word)
-        {
-            ValidationContext context = new(word);
-            List<ValidationResult> errors = new();
+        void IWordDAL.CreateWord(Word word){}
+        public void CreateDefinition(Definition definition, Word word) { }
 
-            if (!Validator.TryValidateObject(word, context, errors))
-            {
-                throw new Exception(errors.ToString());
-            }
-        }
+        void IWordDAL.DeleteWord(int id){}
 
-        void IWordDAL.Delete(int id)
-        {
-            
-        }
+        public void DeleteDefinition(int id) {}
 
         Word IWordDAL.Get(int id)
         {
@@ -65,15 +56,8 @@ namespace LanguageLearning.MockDB
             return words;
         }
 
-        void IWordDAL.Update(Word word)
-        {
-            ValidationContext context = new(word);
-            List<ValidationResult> errors = new();
+        void IWordDAL.UpdateWord(Word word){}
 
-            if (!Validator.TryValidateObject(word, context, errors))
-            {
-                throw new Exception(errors.ToString());
-            }
-        }
+        public void UpdateDefinition(Definition definition) { }
     }
 }
