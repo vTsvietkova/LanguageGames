@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLearning.MockDB
+namespace LanguageLearning.DAL
 {
     public class MockUserDAL : IUserDAL
     {
@@ -38,6 +38,11 @@ namespace LanguageLearning.MockDB
             users.Add(new("editor", 3, "24022022", "editor@mail.com", 250, Role.Editor));
             users.Add(new("seriousPlayer", 4, "24022022", "sp@mail.com", 1000, Role.User));
             return users;
+        }
+
+        public int Login(string username, string password)
+        {
+            return 1;
         }
 
         public void Update(User user)

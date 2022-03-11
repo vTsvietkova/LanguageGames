@@ -1,0 +1,40 @@
+﻿@page
+@model LanguageLearningSite.Pages.RegisterLoginModel
+@{
+
+}
+
+<div class="leftcolumn">
+    <form asp-page-handler="register" method="post">
+    <label asp-for="user.Username"></label>
+    <span asp-validation-for="user.Username"></span>
+    <input asp-for="user.Username" />
+
+    <label asp-for="user.Email"></label>
+    <span asp-validation-for="user.Email"></span>
+    <input asp-for="user.Email" />
+
+    <label asp-for="user.Password"></label>
+    <span asp-validation-for="user.Password"></span>
+    <input asp-for="user.Password" />
+
+    <input type="reset" />
+    <input type="submit" />
+    </form>
+</div>
+
+
+<div class="rightcolumn">
+    <form asp-page-handler="login" method="post">
+        <label asp-for="login.Username"></label>
+        <span asp-validation-for="login.Username"></span>
+        <input asp-for="login.Username" />
+
+        <label asp-for="login.Password"></label>
+        <span asp-validation-for="login.Password"></span>
+        <input asp-for="login.Password" />
+
+        <input type="reset" />
+        <input type="submit" />
+    </form>
+</div>

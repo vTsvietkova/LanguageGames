@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using LanguageLearning.DAL;
 
-namespace LanguageLearning.MockDB
+namespace LanguageLearning.DAL
 {
     class UserDAL : IUserDAL
     {
@@ -133,14 +132,22 @@ namespace LanguageLearning.MockDB
 
         public int Login(string username, string password)
         {
-            throw new NotImplementedException();
             int id = 0;
-            string sql = "";
+            string sql = "select id from user where password = @password and (`username` = @login or `email` = @login)";
             MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@login", username);
+            cmd.Parameters.AddWithValue("@password", password);
             try
             {
                 connection.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
+                if(dr.HasRows)
+                {
+                    while(dr.Read())
+                    {
+                        id = dr.GetInt32("id");
+                    }
+                }
             }
             catch
             {

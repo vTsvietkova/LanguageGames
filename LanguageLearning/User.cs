@@ -38,7 +38,8 @@ namespace LanguageLearning
         public int Id { get => id; set => id = value; }
         [Required, RegularExpression(@"^\w*$")]
         public string Password { get => password; set => password = value; }
-        [Required, RegularExpression(@"^(\w+)@(gmail.com|email.com|student.fontys.nl|ua.fm)$")]
+        [Required, EmailAddress]
+        //[RegularExpression(@"^((\w+).?)+@(((a-z)+).)+(nl|com|fm|net)$")]
         public string Email { get => email; set => email = value; }
         public int Xp { get => xp; set => xp = value; }
         public int Level { get
