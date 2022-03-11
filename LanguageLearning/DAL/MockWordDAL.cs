@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLearning.MockDB
+namespace LanguageLearning.DAL
 {
     public class MockWordDAL : IWordDAL
     {

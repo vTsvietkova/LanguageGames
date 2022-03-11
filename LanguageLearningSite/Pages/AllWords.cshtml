@@ -10,7 +10,7 @@
         <a class="language">Word</a>
     </div>
     <div class="allwords">
-        @for (int i = Model.Skip; i < Model.WordsOnPage; i++)
+        @for (int i = Model.Skip; i<Model.words.Count && i < (Model.WordsOnPage+Model.Skip); i++)
         {
             LanguageLearning.Word word = Model.words[i];
             <div class="box">
@@ -44,6 +44,19 @@
     </form>
 
 
+    <form asp-page-handler="display" method="post">
+        <label asp-for="WordsOnPage"></label>
+        <span asp-validation-for="WordsOnPage"></span>
+        <input asp-for="WordsOnPage" />
+
+        <label asp-for="Skip"></label>
+        <span asp-validation-for="Skip"></span>
+        <input asp-for="Skip" />
+
+        <input type="reset" />
+        <input type="submit" />
+    </form>
+
 </div>
 
 <div class="pagenav">
@@ -51,7 +64,17 @@
         <a><<</a><a><</a>
     </div>
     <div class="numbers">
-        <a>1</a>...<a>3</a>4<a>5</a>...<a>7</a>
+        @if (Model.words.Count < Model.WordsOnPage)
+        {
+            <a>1</a>
+        }
+        else
+        {
+            for (int i = 0; i < Math.Ceiling((double)Model.words.Count / Model.WordsOnPage); i++)
+            {
+                <a asp-page="AllWords" asp-route-skip="@(Model.WordsOnPage*i)">@(i+1)</a>
+            }
+        }
     </div>
     <div class="next"><a>></a><a>>></a></div>
 </div>

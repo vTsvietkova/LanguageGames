@@ -40,7 +40,7 @@ namespace LanguageLearning
         public int NrOfHits { get => nrOfHits; set => nrOfHits = value; }
         public List<Definition> Definitions { get; set; }
 
-        public PartOfSpeach PartOfSpeach
+        /*public PartOfSpeach PartOfSpeach
         {
             get
             {
@@ -51,28 +51,33 @@ namespace LanguageLearning
                 }
                 return partOfSpeach;
             }
-        }
+        }*/
         public string PartsOfSpeach
         {
             get
             {
-                if(this.PartOfSpeach == ((PartOfSpeach)3))
+                PartOfSpeach partOfSpeach = 0;
+                foreach (Definition def in Definitions)
+                {
+                    partOfSpeach = partOfSpeach | def.PartOfSpeach;
+                }
+                if (partOfSpeach == ((PartOfSpeach)3))
                 {
                     return "noun, verb";
                 }
-                else if (this.PartOfSpeach == ((PartOfSpeach)5))
+                else if (partOfSpeach == ((PartOfSpeach)5))
                 {
                     return "noun, adjective";
                 }
-                else if (this.PartOfSpeach == ((PartOfSpeach)6))
+                else if (partOfSpeach == ((PartOfSpeach)6))
                 {
                     return "adjective, verb";
                 }
-                else if (this.PartOfSpeach == ((PartOfSpeach)7))
+                else if (partOfSpeach == ((PartOfSpeach)7))
                 {
                     return "noun, adjective, verb";
                 }
-                return this.PartOfSpeach.ToString();
+                return partOfSpeach.ToString();
             }
         }
         public Definition MostPopularDefinition

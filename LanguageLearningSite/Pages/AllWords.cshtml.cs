@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LanguageLearning;
-using LanguageLearning.MockDB;
+using LanguageLearning.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -28,6 +28,11 @@ namespace LanguageLearningSite.Pages
             }
             WordsOnPage = show;
             words = WordManager.GetAll();
+        }
+
+        public IActionResult OnPostDisplay()
+        {
+            return Page();
         }
     }
 }

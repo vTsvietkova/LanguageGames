@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LanguageLearning.MockDB
+namespace LanguageLearning.DAL
 {
     public interface IWordDAL
     {

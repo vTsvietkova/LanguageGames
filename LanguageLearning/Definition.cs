@@ -31,6 +31,13 @@ namespace LanguageLearning
             this.partOfSpeach = partOfSpeach;
         }
 
+        public Definition(string definition, PartOfSpeach partOfSpeach)
+        {
+            this.definition = definition;
+            this.votes = 0;
+            this.partOfSpeach = partOfSpeach;
+        }
+
         public int Id { get => id; set => id = value; }
         [Required, RegularExpression(@"^(\w+\s?)+$")]
         public string Def { get => definition; set => definition = value; }

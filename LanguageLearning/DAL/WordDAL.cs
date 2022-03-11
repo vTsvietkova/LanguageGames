@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using MySql.Data;
 using MySql;
 using MySql.Data.MySqlClient;
-using LanguageLearning.DAL;
 
-namespace LanguageLearning.MockDB
+namespace LanguageLearning.DAL
 {
-    class WordDAL : IWordDAL
+    public class WordDAL : IWordDAL
     {
         MySqlConnection connection = new(ConnectionString.str);
         public void CreateWord(Word word)
@@ -136,13 +135,10 @@ namespace LanguageLearning.MockDB
                 {
                     if (word.Id != dr.GetInt32("id"))
                     {
-                        if(words.Count != 0)
-                        {
-                            words.Add(word);
-                        }
                         word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
+                        words.Add(word);
                     }
-                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), 0, ((PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech")))));
+                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), ((PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech")))));
                 }
             }
             catch

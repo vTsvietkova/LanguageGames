@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LanguageLearning.MockDB;
+using LanguageLearning.DAL;
 
 namespace LanguageLearning
 {
     public class WordManager
     {
-        IWordDAL DAL;
+        IWordDAL DAL = new WordDAL();
 
         public WordManager()
         {
-            IWordDAL DAL = new WordDAL();
+            
         }
 
         public WordManager(IWordDAL dAL)
@@ -33,7 +33,20 @@ namespace LanguageLearning
             }
             else
             {
+                DAL = new WordDAL();
                 DAL.CreateWord(word);
+                foreach (Definition def in word.Definitions)
+                {
+                    context = new(def);
+                    if (!Validator.TryValidateObject(def, context, errors))
+                    {
+                        throw new Exception(errors.ToString());
+                    }
+                    else
+                    {
+                        DAL.CreateDefinition(def, word);
+                    }
+                }
             }
         }
 
