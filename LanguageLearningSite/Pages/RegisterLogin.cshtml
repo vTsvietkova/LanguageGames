@@ -6,6 +6,7 @@
 
 <div class="leftcolumn">
     <form asp-page-handler="register" method="post">
+        <h3>Register</h3>
     <label asp-for="user.Username"></label>
     <span asp-validation-for="user.Username"></span>
     <input asp-for="user.Username" />
@@ -26,6 +27,7 @@
 
 <div class="rightcolumn">
     <form asp-page-handler="login" method="post">
+        <h3>Login</h3>
         <label asp-for="login.Username"></label>
         <span asp-validation-for="login.Username"></span>
         <input asp-for="login.Username" />

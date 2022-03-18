@@ -50,11 +50,15 @@ namespace LanguageLearning
             }
         }
 
-        public void Delete(int id)
+        public void DeleteWord(int id)
         {
             DAL.DeleteWord(id);
         }
 
+        public void DeleteDefinition(int id)
+        {
+            DAL.DeleteDefinition(id);
+        }
         public Word Get(int id)
         {
             Word word = DAL.Get(id);
@@ -65,6 +69,11 @@ namespace LanguageLearning
         public List<Word> GetAll()
         {
             return DAL.GetAll();
+        }
+
+        public void AddDefinition(Definition definition, Word word)
+        {
+            DAL.CreateDefinition(definition, word);
         }
 
         public void Update(Word word)

@@ -14,11 +14,12 @@ namespace LanguageLearningSite.Pages
         public List<Word> words;
         [BindProperty]
         public int WordsOnPage { get; set; }
+        [BindProperty]
         public int Skip { get; set; }
         private WordManager WordManager = new(new MockWordDAL());
         public void OnGet(int? skip, int show)
         {
-            if(skip.HasValue)
+            if(skip.HasValue && skip.Value > 0)
             {
                 Skip = skip.Value;
             }
@@ -32,7 +33,7 @@ namespace LanguageLearningSite.Pages
 
         public IActionResult OnPostDisplay()
         {
-            return Page();
+            return RedirectToPage(new { skip = Skip, show = WordsOnPage });
         }
     }
 }

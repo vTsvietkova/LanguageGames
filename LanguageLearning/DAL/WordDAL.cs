@@ -152,6 +152,33 @@ namespace LanguageLearning.DAL
             return words;
         }
 
+        public List<Word> GetOrphanedWords()
+        {
+            string sql = "SELECT * FROM `words` WHERE id not in (select distinct word from definition)";
+            MySqlCommand cmd = new(sql, connection);
+            List<Word> words = new();
+            Word word = new Word();
+            try
+            {
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
+                    words.Add(word);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return words;
+        }
+
         public void UpdateWord(Word word)
         {
             string sql = "UPDATE `words` SET `word`=@word,`hits`=@hits WHERE id=@id;";

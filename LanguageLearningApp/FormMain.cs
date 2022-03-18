@@ -14,6 +14,8 @@ namespace LanguageLearningApp
     public partial class FormMain : Form
     {
         WordManager wordManager = new();
+        Word Word;
+        public List<Definition> definitions { get; set; }
         public FormMain()
         {
             InitializeComponent();
@@ -38,11 +40,22 @@ namespace LanguageLearningApp
             {
                 Word word = new(tbWord.Text);
                 wordManager.Create(word);
+                new WordInfo(word).Show();
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            wordManager.DeleteWord(((Word)dgvWords.SelectedRows[0].DataBoundItem).Id);
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            new WordInfo((Word)dgvWords.SelectedRows[0].DataBoundItem).Show();
         }
     }
 }
