@@ -59,5 +59,10 @@ namespace LanguageLearning.DAL
         void IWordDAL.UpdateWord(Word word){}
 
         public void UpdateDefinition(Definition definition) { }
+
+        public Word GetRandom(int q)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

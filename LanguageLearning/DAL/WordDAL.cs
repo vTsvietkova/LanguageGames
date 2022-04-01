@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MySql.Data;
 using MySql;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace LanguageLearning.DAL
 {
@@ -31,7 +32,7 @@ namespace LanguageLearning.DAL
 
         public void CreateDefinition(Definition definition, Word word)
         {
-            string sql = "INSERT INTO `definition`(`word`, `partofspeech`, `definition`, `vote`) VALUES (@word, @partOfSpeach, @definition, 0);";
+            string sql = "INSERT INTO `definition`(`word`, `partofspeech`, `definition`, `vote`) VALUES (@word, @partOfSpeach, @definition, @votes);";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@word", word.Id);
             cmd.Parameters.AddWithValue("@partofspeach", definition.PartOfSpeach);
@@ -107,8 +108,38 @@ namespace LanguageLearning.DAL
                     {
                         word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
                     }
-                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), 0, ((PartOfSpeach)Enum.Parse(typeof(PartOfSpeach),dr.GetString("partofspeech")))));
+                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), ((PartOfSpeach)Enum.Parse(typeof(PartOfSpeach),dr.GetString("partofspeech")))));
                 } 
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return word;
+        }
+
+        public Word GetRandom(int q)
+        {
+            string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id WHERE RAND()<(SELECT ((@number/COUNT(*))*10) FROM words) ORDER BY RAND() LIMIT @number;";
+            MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@number", q);
+            Word word = new Word();
+            try
+            {
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    if (word.Id != dr.GetInt32("id"))
+                    {
+                        word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
+                    }
+                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), ((PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech")))));
+                }
             }
             catch
             {
@@ -185,6 +216,7 @@ namespace LanguageLearning.DAL
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@word", word.WordString);
             cmd.Parameters.AddWithValue("@hits", word.NrOfHits);
+            cmd.Parameters.AddWithValue("@id", word.Id);
             try
             {
                 connection.Open();
@@ -204,17 +236,18 @@ namespace LanguageLearning.DAL
         {
             string sql = "UPDATE `definition` SET `partofspeech`=@partofspeach,`definition`=@definition, vote = @vote WHERE id = @id;";
             MySqlCommand cmd = new(sql, connection);
-            cmd.Parameters.AddWithValue("@partofspeech", definition.PartOfSpeach);
+            cmd.Parameters.AddWithValue("@partofspeach", definition.PartOfSpeach.ToString());
             cmd.Parameters.AddWithValue("@definition", definition.Def);
             cmd.Parameters.AddWithValue("@vote", definition.Votes);
+            cmd.Parameters.AddWithValue("@id", definition.Id);
             try
             {
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex.Message);
             }
             finally
             {

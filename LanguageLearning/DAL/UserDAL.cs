@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
 
 namespace LanguageLearning.DAL
@@ -66,10 +67,13 @@ namespace LanguageLearning.DAL
 
         public void Create(User user)
         {
-            string sql = "INSERT INTO `user`(`username`, `password`, `email`, `xp`, `role`) VALUES (@username, @password, @email, 0, @role);";
+            string sql = "INSERT INTO `user`(`username`, `password`, `email`, `xp`, `role`, salt) VALUES (@username, @password, @email, 0, @role, @salt);";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@username", user.Username);
-            cmd.Parameters.AddWithValue("@password", user.Password);
+            var newSalt = GenerateSalt();
+            var hashedPassword = ComputeHash(Encoding.UTF8.GetBytes(user.Password), Encoding.UTF8.GetBytes(newSalt));
+            cmd.Parameters.AddWithValue("@password", hashedPassword);
+            cmd.Parameters.AddWithValue("@salt", newSalt);
             cmd.Parameters.AddWithValue("@email", user.Email);
             cmd.Parameters.AddWithValue("@role", user.Role.ToString());
             try
@@ -89,10 +93,13 @@ namespace LanguageLearning.DAL
 
         public void Update(User user)
         {
-            string sql = "UPDATE `user` SET `username`=@username,`password`=@password,`email`=@email WHERE id = @id;";
+            string sql = "UPDATE `user` SET `username`=@username,`password`=@password,`email`=@email, salt = @salt WHERE id = @id;";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@username", user.Username);
-            cmd.Parameters.AddWithValue("@password", user.Password);
+            var newSalt = GenerateSalt();
+            var hashedPassword = ComputeHash(Encoding.UTF8.GetBytes(user.Password), Encoding.UTF8.GetBytes(newSalt));
+            cmd.Parameters.AddWithValue("@password", hashedPassword);
+            cmd.Parameters.AddWithValue("@salt", newSalt);
             cmd.Parameters.AddWithValue("@email", user.Email);
             cmd.Parameters.AddWithValue("@id", user.Id);
             try
@@ -133,10 +140,9 @@ namespace LanguageLearning.DAL
         public int Login(string username, string password)
         {
             int id = 0;
-            string sql = "select id from user where password = @password and (`username` = @login or `email` = @login)";
+            string sql = "select id, password, salt from user where `username` = @login or `email` = @login";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@login", username);
-            cmd.Parameters.AddWithValue("@password", password);
             try
             {
                 connection.Open();
@@ -145,7 +151,12 @@ namespace LanguageLearning.DAL
                 {
                     while(dr.Read())
                     {
-                        id = dr.GetInt32("id");
+                        var newSalt = dr.GetString("salt");
+                        var hashedPassword = ComputeHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(newSalt));
+                        if(hashedPassword == dr.GetString("password"))
+                        {
+                            id = dr.GetInt32("id");
+                        }
                     }
                 }
             }
@@ -158,6 +169,18 @@ namespace LanguageLearning.DAL
                 connection.Close();
             }
             return id;
+        }
+        //https://www.automationmission.com/2020/09/17/hashing-and-salting-passwords-in-c/
+        public string ComputeHash(byte[] bytesToHash, byte[] salt)
+        {
+            var byteResult = new Rfc2898DeriveBytes(bytesToHash, salt, 10000);
+            return Convert.ToBase64String(byteResult.GetBytes(24));
+        }
+        public string GenerateSalt()
+        {
+            var bytes = new byte[128 / 8];
+            RandomNumberGenerator.Fill(bytes);
+            return Convert.ToBase64String(bytes);
         }
     }
 }

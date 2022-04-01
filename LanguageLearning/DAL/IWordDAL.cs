@@ -12,5 +12,6 @@ namespace LanguageLearning.DAL
         public abstract List<Word> GetAll();
         public abstract void UpdateWord(Word word);
         public abstract void UpdateDefinition(Definition definition);
+        public abstract Word GetRandom(int q);
     }
 }
