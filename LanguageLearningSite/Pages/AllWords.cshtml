@@ -6,15 +6,15 @@
 
 <div class="lefcolumn">
     <div class="wordofthedaybox">
-        <div class="word">Word of the day</div>
-        <a class="language">Word</a>
+        <div class="language">Word of the day</div>
+        <a class="word">Word</a>
     </div>
     <div class="allwords">
         @for (int i = Model.Skip; i<Model.words.Count && i < (Model.WordsOnPage+Model.Skip); i++)
         {
             LanguageLearning.Word word = Model.words[i];
             <div class="box">
-                <div><a asp-page="Word" asp-route-random="@false" class="word">@word.WordString</a></div>
+                <div><a asp-page="Word" asp-route-random="@false" asp-route-id="@word.Id" class="word">@word.WordString</a></div>
                 <div class="partofspeech">@word.PartsOfSpeach</div>
                 <div class="definition">@word.MostPopularDefinition.Def</div>
                 <div class="language">@word.Definitions.Count definitions in total</div>

@@ -13,7 +13,7 @@ namespace LanguageLearningSite.Pages
     {
         [BindProperty]
         public Word word { get; set; }
-        private WordManager manager = new(new MockWordDAL());
+        private WordManager manager = new();
         public void OnGet(int? id)
         {
             if(id.HasValue)
@@ -22,7 +22,7 @@ namespace LanguageLearningSite.Pages
             }
             else
             {
-                word = manager.GetRandom();
+                word = manager.GetRandom(1);
             }
         }
     }

@@ -20,6 +20,8 @@ namespace LanguageLearningSite.Pages
         public User user { get; set; }
         [BindProperty]
         public Login login { get; set; }
+        [BindProperty]
+        public bool Unveil { get; set; } = true;
         public IActionResult OnGet()
         {
             if(User.Identity.IsAuthenticated)
@@ -42,6 +44,26 @@ namespace LanguageLearningSite.Pages
                 try
                 {
                     manager.Create(user);
+                }
+                catch
+                {
+                    return Page();
+                }
+                try
+                {
+                    int userid = manager.Login(user);
+                    if (userid != 0)
+                    {
+                        User user = manager.Get(userid);
+                        List<Claim> claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.Username));
+                        claims.Add(new Claim("id", userid.ToString()));
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+                        return RedirectToPage("Index");
+                    }
                 }
                 catch
                 {

@@ -16,7 +16,7 @@ namespace LanguageLearningSite.Pages
         public int WordsOnPage { get; set; }
         [BindProperty]
         public int Skip { get; set; }
-        private WordManager WordManager = new(new MockWordDAL());
+        private WordManager WordManager = new();
         public void OnGet(int? skip, int show)
         {
             if(skip.HasValue && skip.Value > 0)

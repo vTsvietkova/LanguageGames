@@ -30,6 +30,17 @@
     border-bottom: 2pt black solid;
 }
 
+input[type=submit] {
+    color: #fffed7;
+    background-color: #d3b3d5;
+    border: 1px solid;
+}
+input[type=reset] {
+    color: #050;
+    background-color: #edffd7;
+    border: 1px solid;
+}
+
 .browsewords{
     grid-area:browsewords;
     border-bottom: 2pt black solid;
@@ -47,16 +58,18 @@
     border-bottom: 2pt black solid;
 }
 
-.leftcolumn{
+.leftcolumn {
     grid-area: leftcolumn;
     display: grid;
     border:gray solid 1pt;
 }
 
-.rightcolumn{
+.rightcolumn {
     grid-area: rightcolumn;
     display: grid;
-    border:gray solid 1pt;
+    border: gray solid 1pt;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
 }
 .pagenav{
     grid-area: pagenav;
@@ -93,11 +106,14 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
 }
-.partofspeech{
+.partofspeech {
     grid-area: wordpart;
+    color: #87a2c0;
 }
-.word{
+.word {
     grid-area: word;
+    color: #d5b3b5;
+    font-weight: bold;
 }
 .definition{
     grid-area:definition;
