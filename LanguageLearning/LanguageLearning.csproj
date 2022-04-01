@@ -1,10 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Validators\Passwords.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Validators\Passwords.txt">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MedallionRandom" Version="1.1.0" />
     <PackageReference Include="MySql.Data" Version="8.0.28" />
   </ItemGroup>
 

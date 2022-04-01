@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningApp", "..\L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningSite", "..\LanguageLearningSite\LanguageLearningSite.csproj", "{B0EC57F2-9853-4EB9-BE1F-8A48A0723AED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests_Language", "..\Tests_Language\Tests_Language.csproj", "{754D6101-7E15-45CD-B112-649CDF9924A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B0EC57F2-9853-4EB9-BE1F-8A48A0723AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0EC57F2-9853-4EB9-BE1F-8A48A0723AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0EC57F2-9853-4EB9-BE1F-8A48A0723AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{754D6101-7E15-45CD-B112-649CDF9924A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{754D6101-7E15-45CD-B112-649CDF9924A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{754D6101-7E15-45CD-B112-649CDF9924A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{754D6101-7E15-45CD-B112-649CDF9924A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
