@@ -33,6 +33,7 @@ namespace LanguageLearningSite
                 options.LoginPath = new PathString("/<path_to_login_page>");
                 options.AccessDeniedPath = new PathString("/<path_to_access_denied_page>");
             } );
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
