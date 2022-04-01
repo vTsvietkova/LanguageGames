@@ -21,6 +21,11 @@ namespace LanguageLearning
             DAL = dAL;
         }
 
+        public int Login(User user)
+        {
+            return DAL.Login(user.Username, user.Password);
+        }
+
         public int Login(Login login)
         {
             return DAL.Login(login.Username, login.Password);

@@ -50,14 +50,18 @@ namespace LanguageLearning
             {
                 return -1;
             }
-            else if(this.partOfSpeach > definition.partOfSpeach)
+            else if(this.partOfSpeach >= definition.partOfSpeach)
             {
-                return 1;
+                if(this.votes >= definition.votes)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
             }
-            if(this.votes > definition.votes)
-            {
-                return -1;
-            }
+            
             return 0;
         }
 

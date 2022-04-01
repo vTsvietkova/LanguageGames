@@ -91,10 +91,24 @@ namespace LanguageLearning
             }
         }
 
-        public Word GetRandom()
+        public void UpdateDefinition(Definition definition)
         {
-            int randomId = 2;
-            return Get(randomId);
+            ValidationContext context = new(definition);
+            List<ValidationResult> errors = new();
+
+            if (!Validator.TryValidateObject(definition, context, errors))
+            {
+                throw new Exception(errors.ToString());
+            }
+            else
+            {
+                DAL.UpdateDefinition(definition);
+            }
+        }
+
+        public Word GetRandom(int quantity)
+        {
+            return DAL.GetRandom(quantity);
         }
     }
 }

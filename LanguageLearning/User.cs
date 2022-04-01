@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LanguageLearning.Validators;
 
 namespace LanguageLearning
 {
@@ -33,13 +34,13 @@ namespace LanguageLearning
             this.xp = xp;
             this.Role = role;
         }
-        [Required, RegularExpression(@"^\w*$")]
+        [Required, RegularExpression(@"^\w*$"), UniqueUsernameOrEmail]
         public string Username { get => username; set => username = value; }
         public int Id { get => id; set => id = value; }
-        [Required, RegularExpression(@"^\w*$")]
+        [Required, RegularExpression(@"^\w*$"), GoodPassword]
         public string Password { get => password; set => password = value; }
-        [Required, EmailAddress]
-        //[RegularExpression(@"^((\w+).?)+@(((a-z)+).)+(nl|com|fm|net)$")]
+        [Required, UniqueUsernameOrEmail]
+        [RegularExpression(@"(^((\w+)(\.)?){1,4}@){1}(([a-z]+)\.)+(nl|com|fm|net)$", ErrorMessage = "Not a valid email")]
         public string Email { get => email; set => email = value; }
         public int Xp { get => xp; set => xp = value; }
         public int Level { get

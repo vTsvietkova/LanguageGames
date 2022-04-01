@@ -19,7 +19,7 @@ namespace LanguageLearning
             Password = password;
         }
 
-        [Required, RegularExpression(@"^\w*$")]
+        [Required, RegularExpression(@"^[\w\.@]+$")]
         public string Username { get; set; }
         [Required, RegularExpression(@"^\w*$")]
         public string Password { get; set; }
