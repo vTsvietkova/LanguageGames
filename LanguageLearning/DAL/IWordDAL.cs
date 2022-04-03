@@ -4,7 +4,7 @@ namespace LanguageLearning.DAL
 {
     public interface IWordDAL
     {
-        public abstract void CreateWord(Word word);
+        public abstract int CreateWord(Word word);
         public abstract void CreateDefinition(Definition definition, Word word);
         public abstract void DeleteWord(int id);
         public abstract void DeleteDefinition(int id);

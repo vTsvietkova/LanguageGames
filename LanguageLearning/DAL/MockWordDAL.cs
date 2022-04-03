@@ -9,7 +9,6 @@ namespace LanguageLearning.DAL
 {
     public class MockWordDAL : IWordDAL
     {
-        void IWordDAL.CreateWord(Word word){}
         public void CreateDefinition(Definition definition, Word word) { }
 
         void IWordDAL.DeleteWord(int id){}
@@ -63,6 +62,11 @@ namespace LanguageLearning.DAL
         public Word GetRandom(int q)
         {
             throw new NotImplementedException();
+        }
+
+        public int CreateWord(Word word)
+        {
+            return 1;
         }
     }
 }

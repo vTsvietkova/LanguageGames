@@ -22,11 +22,11 @@ namespace LanguageLearning
             DAL = dAL;
         }
 
-        public void Create(Word word)
+        public int Create(Word word)
         {
             ValidationContext context = new(word);
             List<ValidationResult> errors = new();
-
+            int id = 0;
             if (!Validator.TryValidateObject(word, context, errors))
             {
                 throw new Exception(errors.ToString());
@@ -34,7 +34,7 @@ namespace LanguageLearning
             else
             {
                 DAL = new WordDAL();
-                DAL.CreateWord(word);
+                id = DAL.CreateWord(word);
                 foreach (Definition def in word.Definitions)
                 {
                     context = new(def);
@@ -48,6 +48,7 @@ namespace LanguageLearning
                     }
                 }
             }
+            return id;
         }
 
         public void DeleteWord(int id)
@@ -62,7 +63,11 @@ namespace LanguageLearning
         public Word Get(int id)
         {
             Word word = DAL.Get(id);
-            word.Definitions.Sort();
+            if(word is not null)
+            {
+                word.Definitions.Sort();
+            }
+
             return word;
         }
 

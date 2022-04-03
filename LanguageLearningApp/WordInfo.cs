@@ -26,12 +26,13 @@ namespace LanguageLearningApp
         {
             InitializeComponent();
             this.word = new WordManager().Get(id);
-            if(this.word != null)
+            if(this.word is not null && this.word.Id != 0)
             {
                 this.WordId = this.word.Id;
             }
             else
             {
+                this.word = null;
                 this.WordId=id;
             }
         }
@@ -50,7 +51,10 @@ namespace LanguageLearningApp
         }
         private void WordInfo_Load(object sender, EventArgs e)
         {
-            dgvDefinitions.DataSource = word.Definitions;
+            if(word is not null)
+            {
+                dgvDefinitions.DataSource = word.Definitions;
+            }
             cbPartOfSpeach.DataSource = Enum.GetValues(typeof(PartOfSpeach));
         }
 
@@ -58,7 +62,7 @@ namespace LanguageLearningApp
         {
             if(definition is null)
             {
-                if(this.word != null)
+                if(this.word is not null && this.word.Id != 0)
                 {
                     wordManager.AddDefinition(new Definition(0, tbDefinition.Text, int.Parse(tbHits.Text), (PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), cbPartOfSpeach.Text)), word);
                 }
@@ -74,13 +78,27 @@ namespace LanguageLearningApp
                 definition.Votes = int.Parse(tbHits.Text);
                 wordManager.UpdateDefinition(definition);
             }
-            GetWordAndRefresh(WordId);
+            if(WordId != 0)
+            {
+                GetWordAndRefresh(WordId);
+            }
+            else
+            {
+                GetWordAndRefresh(this.word.Id);
+            }
         }
 
         private void btnDeleteDef_Click(object sender, EventArgs e)
         {
-            wordManager.DeleteDefinition(((Word)dgvDefinitions.SelectedRows[0].DataBoundItem).Id);
-            GetWordAndRefresh(WordId);
+            wordManager.DeleteDefinition(((Definition)dgvDefinitions.SelectedRows[0].DataBoundItem).Id);
+            if (WordId != 0)
+            {
+                GetWordAndRefresh(WordId);
+            }
+            else
+            {
+                GetWordAndRefresh(this.word.Id);
+            }
         }
 
         private void btnModify_Click(object sender, EventArgs e)

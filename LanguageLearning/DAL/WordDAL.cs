@@ -10,24 +10,27 @@ namespace LanguageLearning.DAL
     public class WordDAL : IWordDAL
     {
         MySqlConnection connection = new(ConnectionString.str);
-        public void CreateWord(Word word)
+        public int CreateWord(Word word)
         {
             string sql = "INSERT INTO `words`(`word`, `hits`) VALUES (@word, 0);";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@word", word.WordString);
+            int lastinsId = 0;
             try
             {
                 connection.Open();
                 cmd.ExecuteNonQuery();
+                lastinsId = ((int)cmd.LastInsertedId);
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex.Message);
             }
             finally
             {
                 connection.Close();
             }
+            return lastinsId;
         }
 
         public void CreateDefinition(Definition definition, Word word)
@@ -37,6 +40,7 @@ namespace LanguageLearning.DAL
             cmd.Parameters.AddWithValue("@word", word.Id);
             cmd.Parameters.AddWithValue("@partofspeach", definition.PartOfSpeach);
             cmd.Parameters.AddWithValue("@definition", definition.Def);
+            cmd.Parameters.AddWithValue("@votes", definition.Votes);
             try
             {
                 connection.Open();
@@ -97,14 +101,14 @@ namespace LanguageLearning.DAL
             string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id WHERE w.id = @id;";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@id", id);
-            Word word = new Word();
+            Word word = null;
             try
             {
                 connection.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    if(word.Id != dr.GetInt32("id"))
+                    if(word is null || word.Id != dr.GetInt32("id"))
                     {
                         word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
                     }

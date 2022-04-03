@@ -104,14 +104,10 @@ namespace LanguageLearning
                 return definition;
             }
         }
-        public string Conjugate()
-        {
-            throw new NotImplementedException();
-        }
 
         public override string ToString()
         {
-            return base.ToString();
+            return word;
         }
     }
 }

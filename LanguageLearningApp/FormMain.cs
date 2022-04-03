@@ -39,8 +39,8 @@ namespace LanguageLearningApp
             try
             {
                 Word word = new(tbWord.Text);
-                wordManager.Create(word);
-                new WordInfo(word).Show();
+                int id = wordManager.Create(word);
+                new WordInfo(id).Show();
             }
             catch(Exception ex)
             {
