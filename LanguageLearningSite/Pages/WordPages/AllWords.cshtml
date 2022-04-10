@@ -1,0 +1,85 @@
+﻿@page "{skip:int=0}/{show:int=4}"
+@using LanguageLearning.WordClasses
+@model             AllWordsModel
+@{
+    ViewData["Title"] = "All words";
+}
+
+<div class="lefcolumn">
+    <div class="wordofthedaybox">
+        <div class="language">Word of the day</div>
+        <a class="word">Word</a>
+    </div>
+    <div class="allwords">
+        @for (int i = Model.Skip; i<Model.words.Count && i < (Model.WordsOnPage+Model.Skip); i++)
+        {
+                Word word = Model.words[i];
+            <div class="box">
+                <div><a asp-page="Word" asp-route-random="@false" asp-route-id="@word.Id" class="word">@word.WordString</a></div>
+                <div class="partofspeech">@word.PartsOfSpeach</div>
+                <div class="definition">@word.MostPopularDefinition.Def</div>
+                <div class="language">@word.Definitions.Count definitions in total</div>
+            </div>
+        }
+    </div>
+</div>
+<div class="rightcolumn">
+    <h2>Filters</h2>
+    <form>
+        <div class="include">
+            <h3>Include</h3>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+        </div>
+        <div class="exclude">
+            <h3>Exclude</h3>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+        </div>
+        <div class="sort">
+            <h3>Filter</h3>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+            <div class="row"><input type="checkbox" /><label>Something</label></div>
+        </div>
+        <input type="submit" />
+    </form>
+
+
+    <form asp-page-handler="display" method="post">
+        <label asp-for="WordsOnPage"></label>
+        <span asp-validation-for="WordsOnPage"></span>
+        <input asp-for="WordsOnPage" />
+
+        <label asp-for="Skip"></label>
+        <span asp-validation-for="Skip"></span>
+        <input asp-for="Skip" />
+
+        <input type="reset" />
+        <input type="submit" />
+    </form>
+
+</div>
+
+<div class="pagenav">
+    <div class="prev">
+        <a asp-page="AllWords" asp-route-show="@Model.WordsOnPage" asp-route-skip="0"><<</a>
+        <a asp-page="AllWords" asp-route-show="@Model.WordsOnPage" asp-route-skip="@(Model.WordsOnPage - Model.Skip)"><</a>
+    </div>
+    <div class="numbers">
+        @if (Model.words.Count < Model.WordsOnPage)
+        {
+            <a>1</a>
+        }
+        else
+        {
+            for (int i = 0; i < Math.Ceiling((double)Model.words.Count / Model.WordsOnPage); i++)
+            {
+                <a asp-page="AllWords" asp-route-show="@Model.WordsOnPage" asp-route-skip="@(Model.WordsOnPage*i)">@(i+1)</a>
+            }
+        }
+    </div>
+    <div class="next">
+    <a asp-page="AllWords" asp-route-show="@Model.WordsOnPage" asp-route-skip="@(Model.words.Count - Model.WordsOnPage)">></a>
+    <a asp-page="AllWords" asp-route-show="@Model.WordsOnPage" asp-route-skip="@(Model.WordsOnPage + Model.Skip)">>></a>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@page
+@model             ProfileModel
+@{
+}
+
+<form method="post" asp-page-handler="out" class="rightcolumn">
+    <input value="Log out" type="submit">
+</form>
+
+<div class="leftcolumn">
+    <p>@Model.user.Username</p>
+    <p>@Model.user.Email</p>
+</div>

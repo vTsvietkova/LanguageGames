@@ -61,7 +61,8 @@ input[type=reset] {
 .leftcolumn {
     grid-area: leftcolumn;
     display: grid;
-    border:gray solid 1pt;
+    grid-template-columns: 1fr;
+    border: gray solid 1pt;
 }
 
 .rightcolumn {
@@ -88,23 +89,32 @@ input[type=reset] {
 .next{
     grid-area:next;
 }
-.box{
-    border:gray double 1pt;
+.box {
+    border: gray double 1pt;
     display: grid;
-    grid-template-areas: 
-    "word wordpart"
-    "definition definition"
-    "language language";
+    grid-template-areas: "word wordpart" "definition definition" "language language";
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
+    background-color: #F6FEDB;
 }
-.wordofthedaybox{
-    border:gray double 3pt;
+    .box:hover {
+        background-color: #E2CACC;
+    }
+.wordofthedaybox {
+    border: gray double 3pt;
     display: grid;
-    grid-template-areas: 
-    "word language";
+    grid-template-areas:
+        "word language";
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
+    background-color: #39F9EC;
+}
+a:visited{
+    text-decoration:none;
+}
+a {
+    color: #5D576B;
+    text-decoration:none;
 }
 .partofspeech {
     grid-area: wordpart;
@@ -112,11 +122,19 @@ input[type=reset] {
 }
 .word {
     grid-area: word;
-    color: #d5b3b5;
+    color: #5D576B;
     font-weight: bold;
+    text-decoration:none;
 }
-.definition{
-    grid-area:definition;
+    .word:visited {
+        color: #5D576B;
+    }
+
+a:link, a:visited {
+    color: #5D576B;
+}
+.definition {
+    grid-area: definition;
 }
 .language{
     grid-area:language;
@@ -125,11 +143,30 @@ input[type=reset] {
     grid-area: search;
     display: grid;
     grid-template-areas: 
-    "slabel sinput ssubmit";
-    grid-template-columns: auto 1fr auto;
+    "label input submit";
+    grid-template-columns: 1fr 2fr auto;
     grid-template-rows: auto;
 }
 .allwords{
     grid-template-columns: 1fr;
     /*grid-template-rows: repeat(autofit, );*/
+}
+.field.container {
+    display: grid;
+    grid-template-areas:
+        "error error"
+        "label input";
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+    align-content:center;
+}
+label{
+    grid-area:label;
+}
+input[type=text]
+{
+    grid-area:input;
+}
+span{
+    grid-area:error;
 }

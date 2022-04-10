@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32106.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearning", "LanguageLearning.csproj", "{5A0BA2D2-7032-4F0E-AD71-166D08B1ACD1}"
 EndProject
@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningApp", "..\L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningSite", "..\LanguageLearningSite\LanguageLearningSite.csproj", "{B0EC57F2-9853-4EB9-BE1F-8A48A0723AED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests_Language", "..\Tests_Language\Tests_Language.csproj", "{754D6101-7E15-45CD-B112-649CDF9924A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests_Language", "..\Tests_Language\Tests_Language.csproj", "{754D6101-7E15-45CD-B112-649CDF9924A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageLearningLogic", "..\LanguageLearningLogic\LanguageLearningLogic.csproj", "{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\LanguageLearningDAL\Data.csproj", "{E03EA178-14AB-414D-958A-D5B9615B1E1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{754D6101-7E15-45CD-B112-649CDF9924A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{754D6101-7E15-45CD-B112-649CDF9924A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{754D6101-7E15-45CD-B112-649CDF9924A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03EA178-14AB-414D-958A-D5B9615B1E1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03EA178-14AB-414D-958A-D5B9615B1E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03EA178-14AB-414D-958A-D5B9615B1E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03EA178-14AB-414D-958A-D5B9615B1E1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

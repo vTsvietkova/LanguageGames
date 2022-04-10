@@ -1,15 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ApplicationIcon />
-    <OutputType>WinExe</OutputType>
-    <StartupObject />
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LanguageLearningDAL\Data.csproj" />
-    <ProjectReference Include="..\LanguageLearningLogic\LanguageLearningLogic.csproj" />
     <ProjectReference Include="..\LanguageLearning\LanguageLearning.csproj" />
   </ItemGroup>
 

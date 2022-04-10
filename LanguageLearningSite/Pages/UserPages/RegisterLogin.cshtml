@@ -1,0 +1,61 @@
+﻿@page
+@model             RegisterLoginModel
+@{
+
+}
+
+<div class="leftcolumn">
+    <form asp-page-handler="register" method="post">
+        <h3>Register</h3>
+        <div class="field container">
+            <label asp-for="user.Username"></label>
+            <span asp-validation-for="user.Username"></span>
+            <input asp-for="user.Username" />
+        </div>
+        <div class="field container">    
+            <label asp-for="user.Email"></label>
+            <span asp-validation-for="user.Email"></span>
+            <input asp-for="user.Email" />
+        </div>
+        <div class="field container">
+
+            <label asp-for="user.Password"></label>
+            <span asp-validation-for="user.Password"></span>
+            @if(Model.Unveil)
+            {
+                <input type="password" asp-for="user.Password" />
+            }
+            else
+            {
+                <input type="text" asp-for="user.Password" />
+            }
+            
+        </div>
+        <div class="field container">
+            <input type="reset" />
+            <input type="submit" />
+            </div>
+    </form>
+</div>
+
+
+<div class="rightcolumn">
+    <form asp-page-handler="login" method="post">
+        <h3>Login</h3>
+        <div class="field container">
+            <label asp-for="login.Username"></label>
+            <span asp-validation-for="login.Username"></span>
+            <input asp-for="login.Username" />
+        </div>
+
+        <div class="field container">
+            <label asp-for="login.Password"></label>
+            <span asp-validation-for="login.Password"></span>
+            <input type="password" asp-for="login.Password" />
+        </div>
+        <div class="field container">
+            <input type="reset" />
+            <input type="submit" />
+        </div>
+    </form>
+</div>

@@ -1,5 +1,5 @@
-﻿using LanguageLearning;
-using LanguageLearning.DAL;
+﻿using Data.WordData;
+using LanguageLearningLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -26,13 +26,6 @@ namespace LanguageLearningSite.Pages
 
         public void OnPost()
         {
-            IWordDAL dal = new MockWordDAL();
-            List<Word> words = dal.GetAll();
-            WordManager manager = new();
-            foreach (Word word in words)
-            {
-                manager.Create(word);
-            }
         }
     }
 }

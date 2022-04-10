@@ -1,0 +1,11 @@
+﻿@page
+@model LanguageLearningSite.Pages.GamePages.PickWordForDefinitionModel
+@{
+}
+
+<form method="post">
+    <select asp-for="@Model.Id" asp-items="Model.Options"></select>
+    <p>@Model.RandomDefinition.Definitions[0].Def</p>
+    <input type="hidden" asp-for="@Model.RandomDefinition"/>
+    <input type="submit" value="Next"/>
+</form>
