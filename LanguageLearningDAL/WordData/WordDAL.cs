@@ -11,7 +11,7 @@ namespace Data.WordData
 {
     public class WordDAL : IWordDAL
     {
-        MySqlConnection connection = new(ConnectionString.str);
+        private readonly MySqlConnection connection = new(ConnectionString.str);
         public int CreateWord(Word word)
         {
             string sql = "INSERT INTO `words`(`word`, `hits`) VALUES (@word, 0);";
@@ -103,7 +103,7 @@ namespace Data.WordData
             string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id WHERE w.id = @id;";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@id", id);
-            Word word = null;
+            Word word = new();
             try
             {
                 connection.Open();
@@ -133,7 +133,7 @@ namespace Data.WordData
             string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id WHERE RAND()<(SELECT ((@number/COUNT(*))*10) FROM words) ORDER BY RAND() LIMIT @number;";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@number", q);
-            Word word = new Word();
+            Word word = new();
             try
             {
                 connection.Open();
@@ -163,7 +163,39 @@ namespace Data.WordData
             string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id;";
             MySqlCommand cmd = new(sql, connection);
             List<Word> words = new();
-            Word word = new Word();
+            Word word = new();
+            try
+            {
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    if (word.Id != dr.GetInt32("id"))
+                    {
+                        word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
+                        words.Add(word);
+                    }
+                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), (PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech"))));
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return words;
+        }
+
+        public List<Word> GetAllMatchingSearch(string search)
+        {
+            string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id where w.word like @word%;";
+            MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@word", search);
+            List<Word> words = new();
+            Word word = new();
             try
             {
                 connection.Open();
@@ -194,15 +226,13 @@ namespace Data.WordData
             string sql = "SELECT * FROM `words` WHERE id not in (select distinct word from definition)";
             MySqlCommand cmd = new(sql, connection);
             List<Word> words = new();
-            Word word = new Word();
             try
             {
                 connection.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
-                    words.Add(word);
+                    words.Add(new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits")));
                 }
             }
             catch

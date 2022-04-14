@@ -4,7 +4,22 @@
 }
 
 <div class=leftcolumn>
-    <div class="game">
-        <a asp-page="PickWordForDefinition">Definition game</a>
+    <div class="box">
+        <a class="word" asp-page="PickWordForDefinition">Definition game</a>
+        <div class="partofspeech">new</div>
+        <div class="definition">Guess a random word by definition</div>
     </div>
+    <div class="box">
+        <a class="word" asp-page="Letters">Letters game</a>
+        <div class="partofspeech">new</div>
+        <div class="definition">Make as many words out of the letters of a random word</div>
+    </div>
+    <div class="box">
+        <a class="word" asp-page="Unjumble">Unjumble game</a>
+        <div class="partofspeech">new</div>
+        <div class="definition">Guess a random word by its letters</div>
+    </div>
+</div>
+<div class=rightcolumn>
+
 </div>

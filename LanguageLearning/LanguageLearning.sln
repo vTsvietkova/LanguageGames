@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningSite", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests_Language", "..\Tests_Language\Tests_Language.csproj", "{754D6101-7E15-45CD-B112-649CDF9924A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageLearningLogic", "..\LanguageLearningLogic\LanguageLearningLogic.csproj", "{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageLearningLogic", "..\LanguageLearningLogic\LanguageLearningLogic.csproj", "{A7132A5E-A09B-4C7D-AE78-3F67FF2EFE7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\LanguageLearningDAL\Data.csproj", "{E03EA178-14AB-414D-958A-D5B9615B1E1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\LanguageLearningDAL\Data.csproj", "{E03EA178-14AB-414D-958A-D5B9615B1E1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

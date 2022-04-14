@@ -31,7 +31,7 @@ namespace Data.WordData
         List<Word> IWordDAL.GetAll()
         {
             List<Word> words = new();
-            Word word = new Word("dinosaur", 1, 50);
+            Word word = new("dinosaur", 1, 50);
             word.Definitions.Add(new Definition(1, "An ancient animal", 10, PartOfSpeach.noun));
             words.Add(word);
             word = new Word("appreciate", 2, 50);
@@ -69,6 +69,11 @@ namespace Data.WordData
         public int CreateWord(Word word)
         {
             return 1;
+        }
+
+        public List<Word> GetAllMatchingSearch(string search)
+        {
+            throw new NotImplementedException();
         }
     }
 }

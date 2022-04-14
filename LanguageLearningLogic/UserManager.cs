@@ -11,7 +11,7 @@ namespace LanguageLearningLogic
 {
     public class UserManager
     {
-        private IUserDAL DAL;
+        private readonly IUserDAL DAL;
 
         public UserManager()
         {

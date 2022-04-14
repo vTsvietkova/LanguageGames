@@ -8,8 +8,6 @@ namespace LanguageLearningLogic.Games
 {
     interface IGame
     {
-        public int CalculateScore(int gameid);
-        public void LoadGame(int gameid);
-        public void SaveGame(int gameid);
+        public int CalculateScore();
     }
 }

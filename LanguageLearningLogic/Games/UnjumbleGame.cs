@@ -5,15 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Medallion;
 using LanguageLearning.WordClasses;
+using System.Text.RegularExpressions;
 
 namespace LanguageLearningLogic.Games
 {
-    class UnjumbleGame : IGame
+    public class UnjumbleGame : IGame
     {
-        private WordManager WordManager = new();
+        private readonly WordManager WordManager = new();
         public Word InitialWord { get; set; }
-        public List<string> Guesses { get; set; }
-        public virtual int CalculateScore(int gameid)
+        private List<string> Guesses { get; set; }
+        public virtual int CalculateScore()
         {
             int correctAnswer = -1;
             //Check answers
@@ -26,8 +27,6 @@ namespace LanguageLearningLogic.Games
                     break;
                 }
             }
-            //TODO
-            //put into the word class once done
             //How many possible answers are there?
             int maxGuesses = 0;
             //Find number of all possible combinations of letters
@@ -38,11 +37,11 @@ namespace LanguageLearningLogic.Games
             {//you didn't
                 return 0;
             }
-            else if (correctAnswer == (0|1|2))
+            else if (correctAnswer == (0|1))
             {//in three or less tries, good job
                 return 100;
             }
-            else if (InitialWord.WordString.Length <= 3 && correctAnswer > 3)
+            else if (InitialWord.WordString.Length <= 3 && correctAnswer >= 3)
             {//simple word, took your time to get there
                 return 40;
             }
@@ -51,8 +50,29 @@ namespace LanguageLearningLogic.Games
                 return 100 - 100 * correctAnswer / maxGuesses;
             }
             else
-            {// this is intended to reward you for ppersistance, may adjust values later 
+            {// this is intended to reward you for persistance, may adjust values later 
                 return correctAnswer / maxGuesses;
+            }
+        }
+        public virtual string? JumbledLetters { get; set; }
+
+        public bool AddAnswer(string guess)
+        {
+            string regex = @"^([@word]){0,@count}$";
+            regex = regex.Replace("@word", InitialWord.WordString);
+            regex = regex.Replace("@count", InitialWord.WordString.Length.ToString());
+            if(!Regex.IsMatch(guess, regex))
+            {
+                return false;
+            }
+            if (!Guesses.Contains(guess))
+            {
+                Guesses.Add(guess);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -60,39 +80,24 @@ namespace LanguageLearningLogic.Games
         {
             InitialWord = WordManager.GetRandom(1);
             Guesses = new();
+            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
         }
 
         public UnjumbleGame(Word word)
         {
             InitialWord = word;
+            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
             Guesses = new();
         }
 
         public UnjumbleGame(Word word, List<string> guesses)
         {
             InitialWord = word;
+            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
             Guesses = guesses;
         }
 
-        public void LoadGame(int gameid)
-        {
-
-        }
-
-        public void SaveGame(int gameid)
-        {
-
-        }
-
-        public static char[] GetCharacters(string word)
-        {
-            return word.ToArray();
-        }
-        public static char[] Jumble(char[] letters)
-        {
-            return letters.Shuffled().ToArray();
-        }
-        public static char[] Jumble(string word)
+        public virtual char[] Jumble(string word)
         {
             return word.ToArray().Shuffled().ToArray();
         }

@@ -11,7 +11,7 @@ namespace LanguageLearningLogic
 {
     public class WordManager
     {
-        IWordDAL DAL = new WordDAL();
+        private readonly IWordDAL DAL = new WordDAL();
 
         public WordManager()
         {
@@ -27,7 +27,7 @@ namespace LanguageLearningLogic
         {
             ValidationContext context = new(word);
             List<ValidationResult> errors = new();
-            int id = 0;
+            int id;
             if (!Validator.TryValidateObject(word, context, errors))
             {
                 throw new Exception(errors.ToString());
@@ -124,6 +124,11 @@ namespace LanguageLearningLogic
         public Word GetRandom(int quantity)
         {
             return DAL.GetRandom(quantity);
+        }
+
+        public List<Word> GetAllMatchingSearch(string search)
+        {
+            return DAL.GetAllMatchingSearch(search);
         }
     }
 }
