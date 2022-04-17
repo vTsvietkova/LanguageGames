@@ -13,11 +13,6 @@ namespace LanguageLearningLogic
     {
         private readonly IWordDAL DAL = new WordDAL();
 
-        public WordManager()
-        {
-
-        }
-
         public WordManager(IWordDAL dAL)
         {
             DAL = dAL;
@@ -128,7 +123,12 @@ namespace LanguageLearningLogic
 
         public List<Word> GetAllMatchingSearch(string search)
         {
-            return DAL.GetAllMatchingSearch(search);
+            var words = DAL.GetAll();
+            if (!String.IsNullOrEmpty(search))
+            {
+                words = words.Where(s => s.WordString!.Contains(search)).ToList();
+            }
+            return words;
         }
     }
 }

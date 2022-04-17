@@ -11,6 +11,10 @@ namespace Data.UserData
 {
     public class MockUserDAL : IUserDAL
     {
+        public bool CanBeRenamed(User user)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Create(User user)
         {

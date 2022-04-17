@@ -1,3 +1,4 @@
+using Data.WordData;
 using LanguageLearning.WordClasses;
 using LanguageLearningLogic;
 using Microsoft.AspNetCore.Mvc;
@@ -17,18 +18,19 @@ namespace LanguageLearningSite.Pages.GamePages
         public Word RandomDefinition { get; set; }
         public void OnGet()
         {
-            Options = new WordManager().GetAll().Select(a =>
+            WordManager wordManager = new WordManager(new WordDAL());
+            Options = wordManager.GetAll().Select(a =>
                                           new SelectListItem
                                           {
                                               Value = a.Id.ToString(),
                                               Text =  a.WordString
                                           }).ToList();
-            RandomDefinition = new WordManager().GetRandom(1);
+            RandomDefinition = wordManager.GetRandom(1);
         }
 
         public IActionResult OnPost()
         {
-            Word word = new WordManager().Get(Id);
+            Word word = new WordManager(new WordDAL()).Get(Id);
             if(word != null)
             {
                 if(RandomDefinition.WordString == word.WordString)

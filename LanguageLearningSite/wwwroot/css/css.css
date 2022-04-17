@@ -6,7 +6,6 @@
         "pagenav pagenav search search search";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows:  auto 1fr auto;
-    min-height: 400px;
 }
 @media(max-width: 800px)
 {

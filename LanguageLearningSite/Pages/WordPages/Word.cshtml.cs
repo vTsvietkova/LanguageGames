@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.WordData;
 using LanguageLearning.WordClasses;
 using LanguageLearningLogic;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace LanguageLearningSite.Pages.WordPages
     {
         [BindProperty]
         public Word word { get; set; }
-        private WordManager manager = new();
+        private WordManager manager = new(new WordDAL());
         public void OnGet(int? id)
         {
             if (id.HasValue)

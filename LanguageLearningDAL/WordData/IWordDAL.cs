@@ -14,7 +14,5 @@ namespace Data.WordData
         public abstract void UpdateWord(Word word);
         public abstract void UpdateDefinition(Definition definition);
         public abstract Word GetRandom(int q);
-
-        public List<Word> GetAllMatchingSearch(string search);
     }
 }

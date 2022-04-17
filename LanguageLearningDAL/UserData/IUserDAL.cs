@@ -15,5 +15,6 @@ namespace Data.UserData
         public abstract List<User> GetAll();
         public abstract void Update(User user);
         public abstract int Login(string username, string password);
+        public bool CanBeRenamed(User user);
     }
 }

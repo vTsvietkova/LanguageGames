@@ -43,6 +43,34 @@ namespace Data.UserData
             return user;
         }
 
+        public bool CanBeRenamed(User user)
+        {
+            string sql = "select EXISTS(select id from user where user.id != @id and (user.username = @username or user.email = @mail));";
+            MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@id", user.Id);
+            cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@mail", user.Email);
+            bool canBeRenamed = false;
+            try
+            {
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    canBeRenamed = dr.GetBoolean(0);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return canBeRenamed;
+        }
+
         public List<User> GetAll()
         {
             string sql = "SELECT `id`, `username`, `password`, `email`, `xp`, `role` FROM `user`;";

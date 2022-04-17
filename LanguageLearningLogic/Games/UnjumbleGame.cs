@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Medallion;
 using LanguageLearning.WordClasses;
 using System.Text.RegularExpressions;
+using Data.WordData;
 
 namespace LanguageLearningLogic.Games
 {
     public class UnjumbleGame : IGame
     {
-        private readonly WordManager WordManager = new();
+        private readonly WordManager WordManager = new(new WordDAL());
         public Word InitialWord { get; set; }
         private List<string> Guesses { get; set; }
         public virtual int CalculateScore()

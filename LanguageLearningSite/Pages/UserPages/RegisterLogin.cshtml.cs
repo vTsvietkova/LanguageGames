@@ -53,7 +53,8 @@ namespace LanguageLearningSite.Pages.UserPages
                 }
                 try
                 {
-                    int userid = manager.Login(user);
+                    Login login = new(user.Username, user.Password);
+                    int userid = manager.Login(login);
                     if (userid != 0)
                     {
                         User user = manager.Get(userid);
@@ -64,7 +65,7 @@ namespace LanguageLearningSite.Pages.UserPages
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
 
-                        return RedirectToPage("Index");
+                        return RedirectToPage("/Index");
                     }
                 }
                 catch

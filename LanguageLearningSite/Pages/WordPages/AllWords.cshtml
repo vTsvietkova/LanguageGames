@@ -1,4 +1,4 @@
-﻿@page "{skip:int=0}/{show:int=4}"
+﻿@page "{skip:int=0}/{show:int=4}/{search?}"
 @using LanguageLearning.WordClasses
 @model             AllWordsModel
 @{
@@ -18,7 +18,19 @@
                 <div><a asp-page="Word" asp-route-random="@false" asp-route-id="@word.Id" class="word">@word.WordString</a></div>
                 <div class="partofspeech">@word.PartsOfSpeach</div>
                 <div class="definition">@word.MostPopularDefinition.Def</div>
-                <div class="language">@word.Definitions.Count definitions in total</div>
+                @if(!User.IsInRole("Admin"))
+                {
+                    <div class="language">
+                       <form method="post" asp-page-handler="DeleteWord">
+                           <input type="hidden" value=@word.Id>
+                           <input type="submit" value="Delete">
+                       </form>
+                        </div>
+                }
+                else
+                {
+                    <div class="language">@word.Definitions.Count definitions in total</div>
+                }
             </div>
         }
     </div>
@@ -59,6 +71,11 @@
     </form>
 
 </div>
+
+        <form class="search" asp-page-handler="Search">
+            <label grid-area="slabel">Search:</label><input asp-for=Search grid-area="sinput" type="text" />
+            <input grid-area="ssubmit" type="submit" />
+        </form>
 
 <div class="pagenav">
     <div class="prev">

@@ -189,38 +189,6 @@ namespace Data.WordData
             return words;
         }
 
-        public List<Word> GetAllMatchingSearch(string search)
-        {
-            string sql = "SELECT w.id, d.id defid, w.word, w.hits, d.partofspeech, d.definition, d.vote definitionvotes FROM `definition` d inner join words w on d.word = w.id where w.word like @word%;";
-            MySqlCommand cmd = new(sql, connection);
-            cmd.Parameters.AddWithValue("@word", search);
-            List<Word> words = new();
-            Word word = new();
-            try
-            {
-                connection.Open();
-                MySqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    if (word.Id != dr.GetInt32("id"))
-                    {
-                        word = new(dr.GetString("word"), dr.GetInt32("id"), dr.GetInt32("hits"));
-                        words.Add(word);
-                    }
-                    word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), (PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech"))));
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return words;
-        }
-
         public List<Word> GetOrphanedWords()
         {
             string sql = "SELECT * FROM `words` WHERE id not in (select distinct word from definition)";
