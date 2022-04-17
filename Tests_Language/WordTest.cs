@@ -3,6 +3,7 @@ using LanguageLearningLogic.Games;
 using LanguageLearning.WordClasses;
 using LanguageLearningLogic;
 using Data.WordData;
+using System.Collections.Generic;
 
 namespace Tests_Language
 {
@@ -31,7 +32,11 @@ namespace Tests_Language
         public void TestSearch()
         {
             WordManager manager = new(new MockWordDAL());
-            manager.GetAllMatchingSearch("");
+            List<Word> words = manager.GetAllMatchingSearch("app");
+            bool appriciate = words[1].WordString == "appreciate" || words[0].WordString == "appreciate";
+            bool apprehend = words[1].WordString == "apprehend" || words[0].WordString == "apprehend";
+            bool tworesults = words.Count == 2;
+            Assert.IsTrue(apprehend && appriciate && tworesults);
         }
     }
 }
