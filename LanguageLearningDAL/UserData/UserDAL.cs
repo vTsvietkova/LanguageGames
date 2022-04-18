@@ -29,7 +29,23 @@ namespace Data.UserData
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    user = new(dr.GetString("username"), id, dr.GetString("password"), dr.GetString("email"), dr.GetInt32("xp"), (Role)Enum.Parse(typeof(Role), dr.GetString("role")));
+
+                    string username = dr.GetString("username");
+                    string password = dr.GetString("password");
+                    string email = dr.GetString("email");
+                    int xp = dr.GetInt32("xp");
+
+                    string value = dr[5].ToString();
+                    Role role;
+                    if(string.IsNullOrEmpty(value))
+                    {
+                        role = Role.User;
+                    }
+                    else
+                    {
+                        role = (Role)Enum.Parse(typeof(Role), value);
+                    }
+                    user = new(username, id, password, email, xp, role);
                 }
             }
             catch

@@ -34,7 +34,7 @@ namespace LanguageLearning.WordClasses
             NrOfHits = nrOfHits;
             Definitions = new();
         }
-        [Required, RegularExpression(@"^$")]
+        [Required]
         public string WordString { get => word; set => word = value; }
         public int Id { get => id; set => id = value; }
         public int NrOfHits { get => nrOfHits; set => nrOfHits = value; }

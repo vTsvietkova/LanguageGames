@@ -40,7 +40,7 @@ namespace Data.UserData
         {
             List<User> users = new();
             users.Add(new("user", 1, "24022022", "user@mail.com", 200, Role.User));
-            users.Add(new("admin", 2, "24022022", "admin@mail.com", 1995, Role.Administrator));
+            users.Add(new("admin", 2, "24022022", "admin@mail.com", 1995, Role.Admin));
             users.Add(new("editor", 3, "24022022", "editor@mail.com", 250, Role.Editor));
             users.Add(new("seriousPlayer", 4, "24022022", "sp@mail.com", 1000, Role.User));
             return users;

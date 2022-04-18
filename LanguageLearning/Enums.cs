@@ -18,6 +18,6 @@ namespace LanguageLearning
     {
         User,
         Editor,
-        Administrator
+        Admin
     }
 }

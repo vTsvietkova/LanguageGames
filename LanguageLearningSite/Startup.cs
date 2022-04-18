@@ -31,8 +31,8 @@ namespace LanguageLearningSite
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
             options =>
             {
-                options.LoginPath = new PathString("/<path_to_login_page>");
-                options.AccessDeniedPath = new PathString("/<path_to_access_denied_page>");
+                options.LoginPath = new PathString("/UserPages/RegisterLogin");
+                options.AccessDeniedPath = new PathString("/UserPages/AccessDenied");
             } );
             services.AddSession();
         }

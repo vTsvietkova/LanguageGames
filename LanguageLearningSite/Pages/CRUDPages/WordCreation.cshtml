@@ -1,4 +1,53 @@
-﻿@page
+﻿@page "{id?}/{noOfDefinitions?}"
+@using LanguageLearning
 @model LanguageLearningSite.Pages.CRUDPages.WordCreationModel
 @{
 }
+
+<div class="leftcolumn">
+    <form method="post" asp-page-handler="SetNoOfDefinitions">
+             <div class="field container">
+
+            <label asp-for="NoOfDefinitions"></label>
+            <span asp-validation-for="NoOfDefinitions"></span>
+            <input type="number" asp-for="NoOfDefinitions" />
+            <input type="submit" value="NoOfDefinitions"/>
+        </div>
+            
+        </form>
+    <form method="post">
+         <div class="field container">
+
+            <label asp-for="Word.WordString">Word:</label>
+            <span asp-validation-for="Word.WordString"></span>
+            <input type="text" asp-for="Word.WordString" />
+        </div>
+        
+        @for(int i =0; i < Model.NoOfDefinitions; i++)
+        {
+             <div class="field container">
+
+            <label asp-for="Word.Definitions[i].Def"></label>
+            <span asp-validation-for="Word.Definitions[i].Def"></span>
+            <input asp-for=Word.Definitions[i].Def type="text"/>
+        </div>
+             <div class="field container">
+
+            <label asp-for="Word.Definitions[i].Votes"></label>
+            <span asp-validation-for="Word.Definitions[i].Votes"></span>
+            <input type="number" asp-for="Word.Definitions[i].Votes" />
+        </div>
+         <div class="field container">
+
+            <label asp-for="Word.Definitions[i].PartOfSpeach"></label>
+            <select asp-for="Word.Definitions[i].PartOfSpeach" asp-items="Html.GetEnumSelectList<PartOfSpeach>()">
+                <option value="">Choose part of speach</option>
+            </select>
+        </div>
+        }
+        <input type="submit"/>
+    </form>
+</div>
+<div class="rightcolumn">
+    <form method="post" asp-page-handler="DeleteWord"></form>
+</div>

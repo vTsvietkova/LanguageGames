@@ -42,11 +42,6 @@ namespace LanguageLearningSite.Pages.WordPages
                 words = WordManager.GetAllMatchingSearch(search);
             }
         }
-        public IActionResult OnPostDeleteWord(int wordid)
-        {
-            new WordManager(new WordDAL()).DeleteWord(wordid);
-            return RedirectToPage(new { skip = Skip, show = WordsOnPage, search = Search });
-        }
 
         public IActionResult OnPostSearch()
         {

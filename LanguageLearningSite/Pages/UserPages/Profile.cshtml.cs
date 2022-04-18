@@ -12,9 +12,11 @@ using LanguageLearningLogic;
 using LanguageLearning.UserClasses;
 using Data.WordData;
 using Data.UserData;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LanguageLearningSite.Pages.UserPages
 {
+    [Authorize]
     public class ProfileModel : PageModel
     {
         [BindProperty]

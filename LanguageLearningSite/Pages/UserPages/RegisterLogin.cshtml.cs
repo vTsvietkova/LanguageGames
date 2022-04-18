@@ -92,11 +92,12 @@ namespace LanguageLearningSite.Pages.UserPages
                     List<Claim> claims = new List<Claim>();
                     claims.Add(new Claim(ClaimTypes.Name, user.Username));
                     claims.Add(new Claim("id", userid.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToPage("Index");
+                    return RedirectToPage("/Index");
                 }
                 else
                 {
