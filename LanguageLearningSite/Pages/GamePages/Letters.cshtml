@@ -21,12 +21,16 @@
 }
 </div>
 <div class=rightcolumn>
-    <form method="post" asp-page-handler="Scrap">
+    @if(Model.gameid.HasValue)
+    {
+            <form method="post" asp-page-handler="Scrap">
         <input type="hidden" asp-for=gameid/>
         <input type="submit" value="Scrap game"/>
-    </form>
-    <form method="post" asp-page-handler="Finish">
-        <input type="hidden" asp-for=gameid/>
-        <input type="submit" value="Finish game"/>
-    </form>
+            </form>
+        <form method="post" asp-page-handler="Finish">
+            <input type="hidden" asp-for=gameid/>
+            <input type="submit" value="Finish game"/>
+        </form>
+    }
+
 </div>

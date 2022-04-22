@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Validators\Passwords.txt">
+    <Content Include="UserData\Passwords.txt">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

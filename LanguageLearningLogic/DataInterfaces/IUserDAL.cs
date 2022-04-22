@@ -13,5 +13,7 @@ namespace LanguageLearningLogic.DataInterfaces
         public bool CanBeRenamed(User user);
         void ChangePassword(User user);
         void AddXPPoints(int id, int xp);
+        bool CrededentialsTaken(User user);
+        bool IsGoodPassword(string password);
     }
 }

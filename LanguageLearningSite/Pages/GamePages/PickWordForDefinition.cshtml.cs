@@ -1,6 +1,7 @@
 using Data.WordData;
 using LanguageLearningLogic;
 using LanguageLearningLogic.WordClasses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace LanguageLearningSite.Pages.GamePages
 {
+    [Authorize]
     public class PickWordForDefinitionModel : PageModel
     {
         public List<SelectListItem> Options { get; set; }

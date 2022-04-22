@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using Data.UserData;
 using LanguageLearningLogic;
 using LanguageLearningLogic.UserClasses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LanguageLearningSite.Pages.UserPages
 {
+    [Authorize(Roles = "Admin")]
     public class AllUsersModel : PageModel
     {
         public List<User> Users;

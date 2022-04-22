@@ -79,7 +79,7 @@ namespace LanguageLearningSite.Pages.UserPages
             ModelValidationState pairs = ModelState.ValidationState;
             ValueEnumerable entries = ModelState.Values;
             bool iscorrect = entries.ElementAt(4).Errors.Count == 0;
-            bool isalsocorrect = entries.ElementAt(3).Errors.Count == 0;
+            bool isalsocorrect = entries.ElementAt(5).Errors.Count == 0;
             bool UserIsCorrect = iscorrect && isalsocorrect;
             if (UserIsCorrect)
             {

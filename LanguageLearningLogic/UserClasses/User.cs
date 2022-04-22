@@ -29,12 +29,12 @@ namespace LanguageLearningLogic.UserClasses
             this.xp = xp;
             Role = role;
         }
-        [Required, RegularExpression(@"^\w*$"), /*UniqueUsernameOrEmail*/]
+        [Required, RegularExpression(@"^\w*$")]
         public string Username { get => username; set => username = value; }
         public int Id { get => id; set => id = value; }
-        [Required, RegularExpression(@"^\w*$"), /*GoodPassword*/]
+        [Required, RegularExpression(@"^\w*$")]
         public string Password { get => password; set => password = value; }
-        [Required, /*UniqueUsernameOrEmail*/]
+        [Required]
         [RegularExpression(@"(^((\w+)(\.)?){1,4}@){1}(([a-z]+)\.)+(nl|com|fm|net)$", ErrorMessage = "Not a valid email")]
         public string Email { get => email; set => email = value; }
         public int Xp { get => xp; set => xp = value; }

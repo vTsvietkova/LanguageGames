@@ -1,11 +1,13 @@
 using Data.UserData;
 using LanguageLearningLogic;
 using LanguageLearningLogic.UserClasses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LanguageLearningSite.Pages.CRUDPages
 {
+    [Authorize(Roles = "Admin")]
     public class UserCreationModel : PageModel
     {
         [BindProperty]

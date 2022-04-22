@@ -45,6 +45,18 @@ namespace Data.UserData
             Users.Add(user);
         }
 
+        public bool CrededentialsTaken(User user)
+        {
+            foreach (User u in Users)
+            {
+                if((u.Email == user.Email || u.Username == user.Username) && u.Id != user.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void Delete(int id)
         {
             if(Get(id) != null)
@@ -80,7 +92,14 @@ namespace Data.UserData
             return Users;
         }
 
-
+        public bool IsGoodPassword(string password)
+        {
+            if(password == null || password == "1111" || password == "password" || password == "languagelearning")
+            {
+                return false;
+            }
+            return true;
+        }
 
         public int Login(string username, string password)
         {

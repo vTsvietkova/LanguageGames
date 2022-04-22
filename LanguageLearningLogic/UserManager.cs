@@ -29,7 +29,7 @@ namespace LanguageLearningLogic
             return id;
         }
 
-        public void Create(LanguageLearningLogic.UserClasses.User user)
+        public void Create(User user)
         {
             ValidationContext context = new(user);
             List<ValidationResult> errors = new();
@@ -39,7 +39,10 @@ namespace LanguageLearningLogic
             }
             else
             {
-                DAL.Create(user);
+                if(DAL.IsGoodPassword(user.Password) && !DAL.CrededentialsTaken(user))
+                {
+                    DAL.Create(user);
+                }
             }
         }
 
@@ -51,7 +54,10 @@ namespace LanguageLearningLogic
         {
             if(DAL.CanBeRenamed(user))
             {
-                DAL.Update(user);
+                if(!DAL.CrededentialsTaken(user))
+                {
+                    DAL.Update(user);
+                }
                 if(!string.IsNullOrWhiteSpace(user.Password))
                 {
                     DAL.ChangePassword(user);
@@ -67,11 +73,6 @@ namespace LanguageLearningLogic
                 words = words.Where(s => s.Username!.Contains(search)).ToList();
             }
             return words;
-        }
-
-        public void AddXP(int userid, int xp)
-        {
-
         }
 
         public void Delete(int id)

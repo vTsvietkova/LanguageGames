@@ -37,19 +37,6 @@ namespace LanguageLearningLogic.WordClasses
         public int Id { get => id; set => id = value; }
         public int NrOfHits { get => nrOfHits; set => nrOfHits = value; }
         public List<Definition> Definitions { get; set; }
-
-        /*public PartOfSpeach PartOfSpeach
-        {
-            get
-            {
-                PartOfSpeach partOfSpeach = 0;
-                foreach (Definition def in Definitions)
-                {
-                    partOfSpeach = partOfSpeach | def.PartOfSpeach;
-                }
-                return partOfSpeach;
-            }
-        }*/
         public string PartsOfSpeach
         {
             get

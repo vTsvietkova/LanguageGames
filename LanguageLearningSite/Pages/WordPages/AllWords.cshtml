@@ -24,11 +24,12 @@
     </div>
 </div>
 <div class="rightcolumn">
-    
-    <div>
-        <a asp-page="/CRUDPages/WordCreation">Add a Word</a>
-    </div>
-
+    @if(User.IsInRole("Admin"))
+    {
+        <div>
+            <a asp-page="/CRUDPages/WordCreation">Add a Word</a>
+        </div>        
+    }
 
     <form asp-page-handler="display" method="post">
         <label asp-for="WordsOnPage"></label>

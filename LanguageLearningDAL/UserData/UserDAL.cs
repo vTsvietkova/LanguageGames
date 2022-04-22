@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using LanguageLearningLogic.DataInterfaces;
 using LanguageLearningLogic.UserClasses;
 using LanguageLearningLogic;
+using System.Diagnostics;
 
 namespace Data.UserData
 {
@@ -216,6 +217,56 @@ namespace Data.UserData
             {
                 connection.Close();
             }
+        }
+
+        public bool IsGoodPassword(string password)
+        {
+            bool goodPassword = true;
+            try
+            {
+                string[] lines = File.ReadAllLines(@"wwwroot/Passwords.txt");
+                foreach (string line in lines)
+                {
+                    // Use a tab to indent each line of the file.
+                    if (password.ToLower() == line)
+                    {
+                        goodPassword = false;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return goodPassword;
+        }
+
+        public bool CrededentialsTaken(User user)
+        {
+            MySqlConnection connection = new(ConnectionString.str);
+            bool exists = false;
+            string sql = "select id from user where id=@id and `username` = @username or `email` = @email";
+            MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            cmd.Parameters.AddWithValue("@id", user.Id);
+
+            try
+            {
+                connection.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                exists = dr.HasRows;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return exists;
         }
 
         public int Login(string username, string password)
