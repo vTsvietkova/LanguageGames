@@ -1,0 +1,5 @@
+My application has a few known issues
+
+-mock dal for the definitions doesn't work
+-the log in on the site may not function
+--i tried to fix it but my internet was so slow connection to the server timed out
