@@ -26,13 +26,6 @@ namespace LanguageLearningLogic.WordClasses
             this.partOfSpeach = partOfSpeach;
         }
 
-        public Definition(string definition, PartOfSpeach partOfSpeach)
-        {
-            this.definition = definition;
-            votes = 0;
-            this.partOfSpeach = partOfSpeach;
-        }
-
         public int Id { get => id; set => id = value; }
         [Required, RegularExpression(@"[^\d;'\42]+")]
         public string Def { get => definition; set => definition = value; }

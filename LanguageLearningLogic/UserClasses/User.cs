@@ -42,11 +42,9 @@ namespace LanguageLearningLogic.UserClasses
         {
             get
             {
-                return 0;
+                return Xp/200;
             }
         }
-        public List<Word> LearnedWords { get; set; }
-
         public Role Role { get; set; }
     }
 }
