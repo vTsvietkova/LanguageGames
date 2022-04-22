@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using MySql;
-using MySql.Data;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
-using Data;
-using LanguageLearning;
-using LanguageLearning.UserClasses;
+using LanguageLearningLogic.DataInterfaces;
+using LanguageLearningLogic.UserClasses;
+using LanguageLearningLogic;
 
 namespace Data.UserData
 {
@@ -73,7 +66,7 @@ namespace Data.UserData
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    canBeRenamed = dr.GetBoolean(0);
+                    canBeRenamed = !dr.GetBoolean(0);
                 }
             }
             catch
@@ -140,14 +133,34 @@ namespace Data.UserData
 
         public void Update(User user)
         {
-            string sql = "UPDATE `user` SET `username`=@username,`password`=@password,`email`=@email, salt = @salt WHERE id = @id;";
+            string sql = "UPDATE `user` SET `username`=@username, `email`=@email WHERE id = @id;";
             MySqlCommand cmd = new(sql, connection);
             cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            cmd.Parameters.AddWithValue("@id", user.Id);
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void ChangePassword(User user)
+        {
+            string sql = "UPDATE `user` SET password = @password, salt = @salt WHERE id = @id;";
+            MySqlCommand cmd = new(sql, connection);
             var newSalt = GenerateSalt();
             var hashedPassword = ComputeHash(Encoding.UTF8.GetBytes(user.Password), Encoding.UTF8.GetBytes(newSalt));
             cmd.Parameters.AddWithValue("@password", hashedPassword);
             cmd.Parameters.AddWithValue("@salt", newSalt);
-            cmd.Parameters.AddWithValue("@email", user.Email);
             cmd.Parameters.AddWithValue("@id", user.Id);
             try
             {
@@ -168,6 +181,27 @@ namespace Data.UserData
         {
             string sql = "DELETE FROM `user` WHERE id = @id;";
             MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void AddXPPoints(int id, int xp)
+        {
+            string sql = "UPDATE `user` SET xp=xp+@xp WHERE id = @id;";
+            MySqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@xp", xp);
             cmd.Parameters.AddWithValue("@id", id);
             try
             {

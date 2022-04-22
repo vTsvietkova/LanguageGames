@@ -1,26 +1,21 @@
-﻿using LanguageLearning.WordClasses;
+﻿using Data.WordData;
 using LanguageLearningLogic;
+using LanguageLearningLogic.WordClasses;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LanguageLearningApp
 {
     public partial class FormMain : Form
     {
-        WordManager wordManager = new();
+        WordManager wordManager = new(new WordDAL());
         Word Word;
         public List<Definition> definitions { get; set; }
         public FormMain()
         {
             InitializeComponent();
-            wordManager = new();
+            wordManager = new(new WordDAL());
         }
 
         private void FormMain_Load(object sender, EventArgs e)

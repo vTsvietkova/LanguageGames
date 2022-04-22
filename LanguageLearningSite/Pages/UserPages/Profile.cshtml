@@ -38,4 +38,12 @@
 <div class="leftcolumn">
     <p>@Model.user.Username</p>
     <p>@Model.user.Email</p>
+    <p>@Model.user.Xp</p>
+    @if(User.IsInRole("Admin"))
+    {
+            <p>
+                <a asp-page="/UserPages/AllUsers">Overview users</a>
+                </p>
+    }
+
 </div>

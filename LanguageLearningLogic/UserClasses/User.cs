@@ -1,12 +1,7 @@
-﻿using LanguageLearning.WordClasses;
-using System;
-using System.Collections.Generic;
+﻿using LanguageLearningLogic.WordClasses;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LanguageLearning.UserClasses
+namespace LanguageLearningLogic.UserClasses
 {
     public class User
     {

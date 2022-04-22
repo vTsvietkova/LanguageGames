@@ -1,12 +1,13 @@
 using Data.WordData;
-using LanguageLearning.WordClasses;
 using LanguageLearningLogic;
+using LanguageLearningLogic.WordClasses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace LanguageLearningSite.Pages.CRUDPages
 {
@@ -20,7 +21,15 @@ namespace LanguageLearningSite.Pages.CRUDPages
         public Word Word { get; set; }
         public IActionResult OnPostSetNoOfDefinitions()
         {
-            return Page();
+            if(Word is null || Word.Id == 0)
+            {
+                return RedirectToPage("/CRUDPages/WordCreation", new { id = 0, noOfDefinitions = NoOfDefinitions });
+            }
+            else
+            {
+                return RedirectToPage("/CRUDPages/WordCreation", new { id = Word.Id, noOfDefinitions = NoOfDefinitions });
+            }
+           
         }
         public void OnGet(int? id, int? noOfDefinitions)
         {
@@ -28,8 +37,16 @@ namespace LanguageLearningSite.Pages.CRUDPages
             {
                 Word = new WordManager(new WordDAL()).Get(id.Value);
                 NoOfDefinitions = Word.Definitions.Count;
+                if(NoOfDefinitions < noOfDefinitions)
+                {
+                    while( NoOfDefinitions < noOfDefinitions)
+                    {
+                        Word.Definitions.Add(new());
+                        NoOfDefinitions++;
+                    }
+                }
             }
-            if(noOfDefinitions is not null)
+            else if(noOfDefinitions is not null)
             {
                 NoOfDefinitions = noOfDefinitions.Value;
             }
@@ -38,28 +55,32 @@ namespace LanguageLearningSite.Pages.CRUDPages
         public IActionResult OnPost()
         {
             WordManager manager = new WordManager(new WordDAL());
-            if (ModelState.IsValid)
+            try
             {
-                if(Word.Id == 0)
-                {
-                    manager.Create(Word);
-                }
-                else
-                {
-                    manager.Update(Word);
-                }
+                    if (Word.Id == 0)
+                    {
+                        manager.Create(Word);
+                    }
+                    else
+                    {
+                        manager.Update(Word);
+                    }
             }
-            else
+            catch(RegexMatchTimeoutException ex)
             {
-                return Page();
+                Debug.WriteLine("Regexproblems");
             }
+           
             return RedirectToPage("/WordPages/AllWords");
         }
 
         public IActionResult OnPostDeleteWord()
         {
             WordManager manager = new WordManager(new WordDAL());
-            manager.DeleteWord(Word.Id);
+            if(Word.Id != 0)
+            {
+                manager.DeleteWord(Word.Id);
+            }
             return RedirectToPage("/WordPages/AllWords");
         }
 

@@ -1,6 +1,6 @@
 using Data.WordData;
-using LanguageLearning.WordClasses;
 using LanguageLearningLogic;
+using LanguageLearningLogic.WordClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

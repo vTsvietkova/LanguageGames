@@ -5,9 +5,28 @@
 <div class=leftcolumn>
 <h1>Make as many words as you can out of the letters of the word:</h1>
 <h2>@Model.Game.InitialWord</h2>
+<form method="post" asp-page-handler="AddAnswer">
+    <input type="hidden" asp-for=gameid/>
+    <input type="text" asp-for="Answer"/>
+    <input type="submit" value="Add answer"/>
+</form>
+@if(Model.Game.GetGuesses is not null && Model.Game.GetGuesses.Count > 0)
+    {
+        @foreach(string answer in Model.Game.GetGuesses)
+    {
+        <div class=box>
+            <p class="word">@answer</p>
+        </div>
+    }
+}
 </div>
 <div class=rightcolumn>
-    <form method="post">
-
+    <form method="post" asp-page-handler="Scrap">
+        <input type="hidden" asp-for=gameid/>
+        <input type="submit" value="Scrap game"/>
+    </form>
+    <form method="post" asp-page-handler="Finish">
+        <input type="hidden" asp-for=gameid/>
+        <input type="submit" value="Finish game"/>
     </form>
 </div>

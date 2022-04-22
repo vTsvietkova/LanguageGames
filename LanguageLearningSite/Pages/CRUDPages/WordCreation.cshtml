@@ -1,5 +1,5 @@
 ﻿@page "{id?}/{noOfDefinitions?}"
-@using LanguageLearning
+@using LanguageLearningLogic
 @model LanguageLearningSite.Pages.CRUDPages.WordCreationModel
 @{
 }
@@ -17,7 +17,7 @@
         </form>
     <form method="post">
          <div class="field container">
-
+             <input type="hidden" asp-for=Word.Id>
             <label asp-for="Word.WordString">Word:</label>
             <span asp-validation-for="Word.WordString"></span>
             <input type="text" asp-for="Word.WordString" />
@@ -40,6 +40,7 @@
          <div class="field container">
 
             <label asp-for="Word.Definitions[i].PartOfSpeach"></label>
+            <span asp-validation-for="Word.Definitions[i].Votes"></span>
             <select asp-for="Word.Definitions[i].PartOfSpeach" asp-items="Html.GetEnumSelectList<PartOfSpeach>()">
                 <option value="">Choose part of speach</option>
             </select>

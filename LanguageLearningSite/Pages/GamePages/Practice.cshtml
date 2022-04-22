@@ -1,4 +1,5 @@
 ﻿@page
+@using LanguageLearningLogic.Games
 @model             PracticeModel
 @{
 }
@@ -12,14 +13,36 @@
     <div class="box">
         <a class="word" asp-page="Letters">Letters game</a>
         <div class="partofspeech">new</div>
-        <div class="definition">Make as many words out of the letters of a random word</div>
+        <div class="definition">Make as many words as you can out of the letters of a random word</div>
     </div>
     <div class="box">
         <a class="word" asp-page="Unjumble">Unjumble game</a>
         <div class="partofspeech">new</div>
         <div class="definition">Guess a random word by its letters</div>
     </div>
+    @foreach(GameBase game in @Model.Games)
+{
+    if(game is LettersGame)
+    {
+        <div class="box">
+        <a class="word" asp-page="Letters" asp-route-id=@game.Id>Letters game</a>
+        <div class="partofspeech">continue</div>
+        <div class="definition">Make as many words as you can out of the letters of the word @game.InitialWord</div>
+        </div>
+    }
+    else
+    {
+            <div class="box">
+            <a class="word" asp-page="Unjumble" asp-route-id=@game.Id>Unjumble game</a>
+            <div class="partofspeech">continue</div>
+            <div class="definition">Guess a word by its scrambled letters: @(((UnjumbleGame)game).JumbledLetters)</div>
+    </div>
+    }
+
+}
 </div>
+
+
 <div class=rightcolumn>
 
 </div>

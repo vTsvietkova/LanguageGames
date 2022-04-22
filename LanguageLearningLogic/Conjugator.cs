@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LanguageLearning
+﻿namespace LanguageLearningLogic
 {
     class Conjugator
     {
@@ -23,7 +17,7 @@ namespace LanguageLearning
             possibilities.Add(ReplaceEnding(word, "ves", "fe"));
             possibilities.Add(ReplaceEnding(word, "ves", "f"));
             possibilities.Add(ReplaceEnding(word, "ies", "y"));
-            possibilities.Add(ReplaceEnding(word, "a", "on")); 
+            possibilities.Add(ReplaceEnding(word, "a", "on"));
             //verbs
             possibilities.Add(CheckEnding(word, "ed"));
             possibilities.Add(CheckEnding(word, "ing"));
@@ -32,7 +26,7 @@ namespace LanguageLearning
         }
         private string CheckEnding(string word, string ending)
         {
-            if(word.EndsWith(ending))
+            if (word.EndsWith(ending))
             {
                 return word.Substring(0, word.Length - ending.Length);
             }

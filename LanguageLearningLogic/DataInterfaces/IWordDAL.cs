@@ -1,7 +1,6 @@
-﻿using LanguageLearning.WordClasses;
-using System.Collections.Generic;
+﻿using LanguageLearningLogic.WordClasses;
 
-namespace Data.WordData
+namespace LanguageLearningLogic.DataInterfaces
 {
     public interface IWordDAL
     {

@@ -1,11 +1,6 @@
-﻿using LanguageLearning.UserClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LanguageLearningLogic.UserClasses;
 
-namespace Data.UserData
+namespace LanguageLearningLogic.DataInterfaces
 {
     public interface IUserDAL
     {
@@ -16,5 +11,7 @@ namespace Data.UserData
         public abstract void Update(User user);
         public abstract int Login(string username, string password);
         public bool CanBeRenamed(User user);
+        void ChangePassword(User user);
+        void AddXPPoints(int id, int xp);
     }
 }

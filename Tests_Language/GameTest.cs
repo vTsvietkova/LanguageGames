@@ -28,12 +28,6 @@ namespace Tests_Language
             Assert.IsFalse(game.AddAnswer("sword"));
         }
 
-        [TestMethod]
-        public void JumbleLetters()
-        {
-            UnjumbleGame game = new(new LanguageLearning.WordClasses.Word("words"));
-            Assert.IsFalse(game.JumbledLetters == "words");
-        }
 
         [TestMethod]
         public void CalculateScoreUnjumbleNeverGuessed()

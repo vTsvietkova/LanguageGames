@@ -1,0 +1,75 @@
+﻿@page "{skip:int=0}/{show:int=4}/{search?}"
+@using LanguageLearningLogic.UserClasses
+@model UserPages.AllUsersModel
+@{
+    ViewData["Title"] = "All words";
+}
+
+<div class="lefcolumn">
+    <div class="wordofthedaybox">
+        <div class="language">Word of the day</div>
+        <a class="word">Word</a>
+    </div>
+    <div class="allwords">
+        @for (int i = Model.Skip; i<Model.Users.Count && i < (Model.UsersOnPage+Model.Skip); i++)
+        {
+                User user = Model.Users[i];
+            <div class="box">
+                <div><a asp-page="/CRUDPages/UserCreation" asp-route-random="@false" asp-route-id="@user.Id" class="word">@user.Username</a></div>
+                <div class="partofspeech">@user.Role</div>
+                <div class="definition">@user.Email</div>
+                    <div class="language">@user.Xp experience earned</div>
+            </div>
+        }
+    </div>
+</div>
+<div class="rightcolumn">
+    
+    <div>
+        <a asp-page="/CRUDPages/UserCreation">Create a user</a>
+    </div>
+
+
+    <form asp-page-handler="display" method="post">
+        <label asp-for="UsersOnPage"></label>
+        <span asp-validation-for="UsersOnPage"></span>
+        <input asp-for="UsersOnPage" />
+
+        <label asp-for="Skip"></label>
+        <span asp-validation-for="Skip"></span>
+        <input asp-for="Skip" />
+
+        <input type="reset" />
+        <input type="submit" />
+    </form>
+
+</div>
+
+        <form class="search" asp-page-handler="Search">
+            <label grid-area="slabel">Search:</label><input asp-for=Search grid-area="sinput" type="text" />
+            <input grid-area="ssubmit" type="submit" />
+        </form>
+
+<div class="pagenav">
+    <div class="prev">
+        <a asp-page="AllUsers" asp-route-show="@Model.UsersOnPage" asp-route-skip="0"><<</a>
+        <a asp-page="AllUsers" asp-route-show="@Model.UsersOnPage" asp-route-skip="@(Model.UsersOnPage - Model.Skip)"><</a>
+    </div>
+    <div class="numbers">
+        @if (Model.Users.Count < Model.UsersOnPage)
+        {
+            <a>1</a>
+        }
+        else
+        {
+            for (int i = 0; i < Math.Ceiling((double)Model.Users.Count / Model.UsersOnPage); i++)
+            {
+                <a asp-page="AllUsers" asp-route-show="@Model.UsersOnPage" asp-route-skip="@(Model.UsersOnPage*i)">@(i+1)</a>
+            }
+        }
+    </div>
+    <div class="next">
+    <a asp-page="AllUsers" asp-route-show="@Model.UsersOnPage" asp-route-skip="@(Model.Users.Count - Model.UsersOnPage)">></a>
+    <a asp-page="AllUsers" asp-route-show="@Model.UsersOnPage" asp-route-skip="@(Model.UsersOnPage + Model.Skip)">>></a>
+    </div>
+</div>

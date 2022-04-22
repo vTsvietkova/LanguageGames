@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using MySql.Data;
-using MySql;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System.Diagnostics;
-using LanguageLearning.WordClasses;
-using LanguageLearning;
+using LanguageLearningLogic.DataInterfaces;
+using LanguageLearningLogic.WordClasses;
+using LanguageLearningLogic;
 
 namespace Data.WordData
 {
@@ -178,8 +175,9 @@ namespace Data.WordData
                     word.Definitions.Add(new(dr.GetInt32("defid"), dr.GetString("definition"), dr.GetInt32("definitionvotes"), (PartOfSpeach)Enum.Parse(typeof(PartOfSpeach), dr.GetString("partofspeech"))));
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Debug.WriteLine("Check the get all words method");
                 throw;
             }
             finally
@@ -258,5 +256,6 @@ namespace Data.WordData
                 connection.Close();
             }
         }
+
     }
 }

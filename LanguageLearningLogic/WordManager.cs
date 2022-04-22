@@ -1,17 +1,12 @@
-﻿using Data.WordData;
-using LanguageLearning.WordClasses;
-using System;
-using System.Collections.Generic;
+﻿using LanguageLearningLogic.DataInterfaces;
+using LanguageLearningLogic.WordClasses;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LanguageLearningLogic
 {
     public class WordManager
     {
-        private readonly IWordDAL DAL = new WordDAL();
+        private readonly IWordDAL DAL;
 
         public WordManager(IWordDAL dAL)
         {
@@ -30,6 +25,7 @@ namespace LanguageLearningLogic
             else
             {
                 id = DAL.CreateWord(word);
+                word.Id = id;
                 foreach (Definition def in word.Definitions)
                 {
                     context = new(def);
@@ -98,6 +94,18 @@ namespace LanguageLearningLogic
             else
             {
                 DAL.UpdateWord(word);
+                foreach (Definition def in word.Definitions)
+                {
+                    context = new(def);
+                    if (!Validator.TryValidateObject(def, context, errors))
+                    {
+                        throw new Exception(errors.ToString());
+                    }
+                    else
+                    {
+                        UpdateDefinition(def);
+                    }
+                }
             }
         }
 

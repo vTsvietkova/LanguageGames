@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Diagnostics;
 using LanguageLearningLogic;
-using LanguageLearning.UserClasses;
-using Data.WordData;
 using Data.UserData;
 using Microsoft.AspNetCore.Authorization;
+using LanguageLearningLogic.UserClasses;
 
 namespace LanguageLearningSite.Pages.UserPages
 {

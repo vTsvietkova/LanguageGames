@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LanguageLearningDAL\Data.csproj" />
-    <ProjectReference Include="..\LanguageLearning\LanguageLearning.csproj" />
+    <PackageReference Include="MedallionRandom" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

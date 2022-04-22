@@ -1,21 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LanguageLearningLogic.WordClasses;
 using Medallion;
-using LanguageLearning.WordClasses;
-using System.Text.RegularExpressions;
-using Data.WordData;
 
 namespace LanguageLearningLogic.Games
 {
-    public class UnjumbleGame : IGame
+    public class UnjumbleGame : GameBase
     {
-        private readonly WordManager WordManager = new(new WordDAL());
-        public Word InitialWord { get; set; }
-        private List<string> Guesses { get; set; }
-        public virtual int CalculateScore()
+
+        public UnjumbleGame(Word word) : base(word)
+        {
+        }
+
+        public UnjumbleGame(Word word, List<string> guesses) : base(word, guesses)
+        {
+        }
+
+        public UnjumbleGame(Word word, WordManager manager) : base(word, manager)
+        {
+        }
+
+        public UnjumbleGame(Word word, List<string> guesses, WordManager manager) : base(word, guesses, manager)
+        {
+        }
+
+        public UnjumbleGame(WordManager wordManager) : base(wordManager)
+        {
+        }
+
+        public override int CalculateScore()
         {
             int correctAnswer = -1;
             //Check answers
@@ -38,7 +49,7 @@ namespace LanguageLearningLogic.Games
             {//you didn't
                 return 0;
             }
-            else if (correctAnswer == (0|1))
+            else if (correctAnswer == 0 || correctAnswer == 1)
             {//in three or less tries, good job
                 return 100;
             }
@@ -55,52 +66,18 @@ namespace LanguageLearningLogic.Games
                 return correctAnswer / maxGuesses;
             }
         }
-        public virtual string? JumbledLetters { get; set; }
+        public virtual string? JumbledLetters { get => new string(InitialWord.WordString.ToArray().Shuffled().ToArray());}
 
-        public bool AddAnswer(string guess)
+        public override bool AddAnswer(string guess)
         {
-            string regex = @"^([@word]){0,@count}$";
-            regex = regex.Replace("@word", InitialWord.WordString);
-            regex = regex.Replace("@count", InitialWord.WordString.Length.ToString());
-            if(!Regex.IsMatch(guess, regex))
+            if(guess.Length == InitialWord.WordString.Length)
             {
-                return false;
-            }
-            if (!Guesses.Contains(guess))
-            {
-                Guesses.Add(guess);
-                return true;
+                return base.AddAnswer(guess);
             }
             else
             {
                 return false;
             }
-        }
-
-        public UnjumbleGame()
-        {
-            InitialWord = WordManager.GetRandom(1);
-            Guesses = new();
-            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
-        }
-
-        public UnjumbleGame(Word word)
-        {
-            InitialWord = word;
-            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
-            Guesses = new();
-        }
-
-        public UnjumbleGame(Word word, List<string> guesses)
-        {
-            InitialWord = word;
-            JumbledLetters = this.Jumble(InitialWord.WordString).ToString();
-            Guesses = guesses;
-        }
-
-        public virtual char[] Jumble(string word)
-        {
-            return word.ToArray().Shuffled().ToArray();
         }
     }
 }

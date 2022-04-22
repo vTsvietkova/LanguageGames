@@ -1,6 +1,6 @@
 using Data.UserData;
-using LanguageLearning.UserClasses;
 using LanguageLearningLogic;
+using LanguageLearningLogic.UserClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

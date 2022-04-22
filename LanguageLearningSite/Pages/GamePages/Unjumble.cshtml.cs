@@ -1,51 +1,56 @@
-using Data.WordData;
-using LanguageLearning.WordClasses;
+using Data.UserData;
 using LanguageLearningLogic;
+using LanguageLearningLogic.Games;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
+using Data;
+using Data.WordData;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LanguageLearningSite.Pages.GamePages
 {
+    [Authorize]
     public class UnjumbleModel : PageModel
     {
-        public List<SelectListItem> Options { get; set; }
         [BindProperty]
-        public int Id { get; set; }
+        public string Answer { get; set; }
         [BindProperty]
-        public Word RandomDefinition { get; set; }
-        public void OnGet()
+        public int? gameid { get; set; }
+        public UnjumbleGame Game { get; set; }
+        public void OnGet(int? id)
         {
-            WordManager wordManager = new WordManager(new WordDAL());
-            Options = wordManager.GetAll().Select(a =>
-                                          new SelectListItem
-                                          {
-                                              Value = a.Id.ToString(),
-                                              Text =  a.WordString
-                                          }).ToList();
-            RandomDefinition = wordManager.GetRandom(1);
-        }
-
-        public IActionResult OnPost()
-        {
-            Word word = new WordManager(new WordDAL()).Get(Id);
-            if(word != null)
+            GameManager gameManager = new GameManager(new GameDAL(), new WordDAL());
+            if (id.HasValue)
             {
-                if(RandomDefinition.WordString == word.WordString)
-                {
-                    return new RedirectToPageResult("/WordPages/Word", new {id = Id});
-                }
-                else
-                {
-                    return new RedirectToPageResult("/WordPages/Word", new { id = RandomDefinition.Id });
-                }
+                Game = (UnjumbleGame)gameManager.GetGame(id.Value);
+                gameid = id.Value;
             }
             else
             {
-                return new RedirectToPageResult("Index");
+                Game = (UnjumbleGame)gameManager.CreateNewGame(false, int.Parse(User.FindFirst("id").Value));
+                gameid = Game.Id;
             }
+        }
+
+        public IActionResult OnPostAddAnswer()
+        {
+            GameManager gameManager = new GameManager(new GameDAL(), new WordDAL());
+            Game = (UnjumbleGame)gameManager.GetGame(gameid.Value);
+            new GameManager(new GameDAL(), new WordDAL()).AddAnswer(Answer, Game);
+            return RedirectToPage("/GamePages/Unjumble", new { id = Game.Id });
+        }
+
+        public IActionResult OnPostScrap()
+        {
+            new GameManager(new GameDAL(), new WordDAL()).DeleteGame(gameid.Value);
+            return RedirectToPage("/GamePages/Practice");
+        }
+
+        public IActionResult OnPostFinish()
+        {
+            GameManager gameManager = new GameManager(new GameDAL(), new WordDAL(), new UserDAL());
+            gameManager.FinishGame(gameid.Value, int.Parse(User.FindFirst("id").Value));
+            return RedirectToPage("/GamePages/Practice");
         }
     }
 }

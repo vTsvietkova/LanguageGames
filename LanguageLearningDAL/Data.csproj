@@ -18,7 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LanguageLearning\LanguageLearning.csproj" />
+    <PackageReference Include="MySql.Data" Version="8.0.28" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LanguageLearningLogic\LanguageLearningLogic.csproj" />
   </ItemGroup>
 
 </Project>

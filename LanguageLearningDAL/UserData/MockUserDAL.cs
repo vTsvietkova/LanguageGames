@@ -1,64 +1,105 @@
-﻿using LanguageLearning;
-using LanguageLearning.UserClasses;
-using System;
-using System.Collections.Generic;
+﻿using LanguageLearningLogic;
+using LanguageLearningLogic.DataInterfaces;
+using LanguageLearningLogic.UserClasses;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.UserData
 {
     public class MockUserDAL : IUserDAL
     {
+        public List<User> Users;
+
+        public void AddXPPoints(int id, int xp)
+        {
+            User user = Get(id);
+            if(user is not null)
+            {
+                user.Xp+=xp;
+            }
+        }
+
         public bool CanBeRenamed(User user)
         {
-            throw new NotImplementedException();
+            foreach (User User in Users)
+            {
+                if(User.Username == user.Username || User.Email== user.Email)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void ChangePassword(User user)
+        {
+            User User = Get(user.Id);
+            if(User is not null)
+            {
+                User.Password = user.Password;
+            }
         }
 
         public void Create(User user)
         {
-            ValidationContext context = new(user);
-            List<ValidationResult> errors = new();
-
-            if (!Validator.TryValidateObject(user, context, errors))
-            {
-                throw new Exception(errors.ToString());
-            }
+            user.Id = Users.Last().Id;
+            Users.Add(user);
         }
 
         public void Delete(int id)
         {
+            if(Get(id) != null)
+            {
+                Users.Remove(Get(id));
+            }
         }
 
         public User Get(int id)
         {
-            return new("User", 1, "24022022", "user@mail.com", 200, Role.User);
+            foreach(User user in Users)
+            {
+                if(user.Id == id)
+                {
+                    return user;
+                }
+            }
+            return null;
         }
 
         public List<User> GetAll()
         {
-            List<User> users = new();
-            users.Add(new("user", 1, "24022022", "user@mail.com", 200, Role.User));
-            users.Add(new("admin", 2, "24022022", "admin@mail.com", 1995, Role.Admin));
-            users.Add(new("editor", 3, "24022022", "editor@mail.com", 250, Role.Editor));
-            users.Add(new("seriousPlayer", 4, "24022022", "sp@mail.com", 1000, Role.User));
-            return users;
+
+            if (Users is null)
+            {
+                User[] arrayOfUsers = new User[] { new("user", 1, "24022022", "user@mail.com", 200, Role.User),
+                new("admin", 2, "24022022", "admin@mail.com", 1995, Role.Admin),
+                new("editor", 3, "24022022", "editor@mail.com", 250, Role.Editor),
+                new("seriousPlayer", 4, "24022022", "sp@mail.com", 1000, Role.User)};
+                Users = new();
+                Users.AddRange(arrayOfUsers);
+            }
+            return Users;
         }
+
+
 
         public int Login(string username, string password)
         {
-            return 1;
+            foreach (User item in Users)
+            {
+                if((item.Username==username || item.Email == username) && item.Password==password)
+                {
+                    return item.Id;
+                }
+            }
+            return 0;
         }
 
         public void Update(User user)
         {
-            ValidationContext context = new(user);
-            List<ValidationResult> errors = new();
-
-            if (!Validator.TryValidateObject(user, context, errors))
+            User u = Get(user.Id);
+            if(u != null)
             {
-                throw new Exception(errors.ToString());
+                u=user;
             }
         }
     }

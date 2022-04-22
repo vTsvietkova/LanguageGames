@@ -1,5 +1,5 @@
 ﻿@page "{id?}"
-@using LanguageLearning
+@using LanguageLearningLogic
 @model LanguageLearningSite.Pages.CRUDPages.UserCreationModel
 @{
 }
@@ -23,10 +23,17 @@
             <input type="password" asp-for="user.Password" />
         </div>
         <div class="field container">
+
+            <label asp-for="user.Xp">Experience points</label>
+            <span asp-validation-for="user.Xp"></span>
+            <input type="number" asp-for="user.Xp" />
+        </div>
+        <div class="field container">
                         <select asp-for="user.Role" asp-items="Html.GetEnumSelectList<Role>()">
                 <option value="">Choose role</option>
             </select>
         </div>
+        <input type="hidden" asp-for=user.Id>
         <div class="field container">
             <input type="reset" />
             <input type="submit" />
@@ -36,7 +43,7 @@
 <div class="rightcolumn">
     <div>
         <form method="post" asp-page-handler="Delete">
-            <input type="submit"/>
+            <input type="submit" value="Delete user"/>
         </form>
     </div>
 </div>

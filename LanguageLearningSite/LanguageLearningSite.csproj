@@ -10,7 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LanguageLearningDAL\Data.csproj" />
     <ProjectReference Include="..\LanguageLearningLogic\LanguageLearningLogic.csproj" />
-    <ProjectReference Include="..\LanguageLearning\LanguageLearning.csproj" />
   </ItemGroup>
 
 </Project>

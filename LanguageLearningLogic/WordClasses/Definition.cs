@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LanguageLearning.WordClasses
+namespace LanguageLearningLogic.WordClasses
 {
     public class Definition : IComparable
     {
@@ -39,7 +34,7 @@ namespace LanguageLearning.WordClasses
         }
 
         public int Id { get => id; set => id = value; }
-        [Required, RegularExpression(@"^(\w+\s?)+$")]
+        [Required, RegularExpression(@"[^\d;'\42]+")]
         public string Def { get => definition; set => definition = value; }
         public int Votes { get => votes; set => votes = value; }
         public PartOfSpeach PartOfSpeach { get => partOfSpeach; set => partOfSpeach = value; }
@@ -50,7 +45,7 @@ namespace LanguageLearning.WordClasses
             {
                 return -1;
             }
-            else if (partOfSpeach >= definition.partOfSpeach)
+            else if (partOfSpeach == definition.partOfSpeach)
             {
                 if (votes >= definition.votes)
                 {

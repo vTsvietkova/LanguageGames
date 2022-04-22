@@ -1,0 +1,7 @@
+﻿namespace LanguageLearningLogic
+{
+    class WordSeparator
+    {
+
+    }
+}

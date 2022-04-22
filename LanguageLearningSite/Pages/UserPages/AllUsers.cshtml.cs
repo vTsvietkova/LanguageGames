@@ -1,21 +1,22 @@
 using System.Collections.Generic;
-using Data.WordData;
+using Data.UserData;
 using LanguageLearningLogic;
-using LanguageLearningLogic.WordClasses;
+using LanguageLearningLogic.UserClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-namespace LanguageLearningSite.Pages.WordPages
+
+namespace LanguageLearningSite.Pages.UserPages
 {
-    public class AllWordsModel : PageModel
+    public class AllUsersModel : PageModel
     {
-        public List<Word> words;
+        public List<User> Users;
         [BindProperty]
-        public int WordsOnPage { get; set; }
+        public int UsersOnPage { get; set; }
         [BindProperty]
         public int Skip { get; set; }
         [BindProperty]
         public string Search { get; set; }
-        private WordManager WordManager = new(new WordDAL());
+        private UserManager Manager = new(new UserDAL());
         public void OnGet(int? skip, int show, string search)
         {
             if (skip.HasValue && skip.Value > 0)
@@ -27,25 +28,25 @@ namespace LanguageLearningSite.Pages.WordPages
                 Skip = 0;
             }
             Search = search;
-            WordsOnPage = show;
-            if(string.IsNullOrEmpty(search))
+            UsersOnPage = show;
+            if (string.IsNullOrEmpty(search))
             {
-                words = WordManager.GetAll();
+                Users = Manager.GetAll();
             }
             else
             {
-                words = WordManager.GetAllMatchingSearch(search);
+                Users = Manager.GetAllMatchingSearch(search);
             }
         }
 
         public IActionResult OnPostSearch()
         {
-            return RedirectToPage("/WordPages/AllWords", new { skip = 0, show = 4, search = Search });
+            return RedirectToPage("/UserPages/AllUsers", new { skip = 0, show = 4, search = Search });
         }
 
         public IActionResult OnPostDisplay()
         {
-            return RedirectToPage(new { skip = Skip, show = WordsOnPage, search = Search });
+            return RedirectToPage(new { skip = Skip, show = UsersOnPage, search = Search });
         }
     }
 }

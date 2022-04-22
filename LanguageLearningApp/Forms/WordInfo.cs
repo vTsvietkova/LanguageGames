@@ -1,14 +1,7 @@
-﻿using LanguageLearning;
-using LanguageLearning.WordClasses;
+﻿using Data.WordData;
 using LanguageLearningLogic;
+using LanguageLearningLogic.WordClasses;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LanguageLearningApp
@@ -17,7 +10,7 @@ namespace LanguageLearningApp
     {
         private Word word;
         private int WordId;
-        private WordManager wordManager = new();
+        private WordManager wordManager = new(new WordDAL());
         private Definition definition = null;
         public WordInfo(Word word)
         {
@@ -27,7 +20,7 @@ namespace LanguageLearningApp
         public WordInfo(int id)
         {
             InitializeComponent();
-            this.word = new WordManager().Get(id);
+            this.word = new WordManager(new WordDAL()).Get(id);
             if(this.word is not null && this.word.Id != 0)
             {
                 this.WordId = this.word.Id;
@@ -40,7 +33,7 @@ namespace LanguageLearningApp
         }
         private void GetWordAndRefresh(int id)
         {
-            this.word = new WordManager().Get(id);
+            this.word = new WordManager(new WordDAL()).Get(id);
             if (this.word != null)
             {
                 this.WordId = this.word.Id;

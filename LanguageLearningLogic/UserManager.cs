@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
-using Data.UserData;
-using LanguageLearning.UserClasses;
+﻿using System.ComponentModel.DataAnnotations;
+using LanguageLearningLogic.DataInterfaces;
+using LanguageLearningLogic.UserClasses;
 
 namespace LanguageLearningLogic
 {
@@ -35,7 +29,7 @@ namespace LanguageLearningLogic
             return id;
         }
 
-        public void Create(User user)
+        public void Create(LanguageLearningLogic.UserClasses.User user)
         {
             ValidationContext context = new(user);
             List<ValidationResult> errors = new();
@@ -58,8 +52,27 @@ namespace LanguageLearningLogic
             if(DAL.CanBeRenamed(user))
             {
                 DAL.Update(user);
+                if(!string.IsNullOrWhiteSpace(user.Password))
+                {
+                    DAL.ChangePassword(user);
+                }
             }
-        } 
+        }
+
+        public List<User> GetAllMatchingSearch(string search)
+        {
+            var words = DAL.GetAll();
+            if (!String.IsNullOrEmpty(search))
+            {
+                words = words.Where(s => s.Username!.Contains(search)).ToList();
+            }
+            return words;
+        }
+
+        public void AddXP(int userid, int xp)
+        {
+
+        }
 
         public void Delete(int id)
         {
